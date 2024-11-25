@@ -84,7 +84,8 @@
     "/dist",
     "/oclif.manifest.json",
     "/static/theme.json",
-    "/static/assets"
+    "/static/assets",
+    "tsconfig.json"
   ],
   "homepage": "https://github.com/daymxn/bs-cli",
   "keywords": [
