@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
+import { pnpm } from "#src/util/apps.js";
+
 import { BaseCommand } from "./base-command.js";
 
-// TODO(): implement this after I've pushed it to github and can test it
 export default class UpdateCommand extends BaseCommand<typeof UpdateCommand> {
   public static description =
     "Since bs isn't published to any registry, you can use this command to automatically update your github repo dependency.";
@@ -25,6 +26,14 @@ export default class UpdateCommand extends BaseCommand<typeof UpdateCommand> {
   public static summary = "Update your CLI to the latest version.";
 
   public async run() {
-    await this.showHelp();
+    this.i("Updating CLI");
+
+    await pnpm("pnpm add daymxn/bs-cli");
+
+    this.d("CLI updated");
+
+    return {
+      message: "CLI updated",
+    };
   }
 }
