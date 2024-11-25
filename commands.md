@@ -41,6 +41,7 @@
 - [`bs test:report`](#bs-testreport)
 - [`bs test:run`](#bs-testrun)
 - [`bs test:unpack`](#bs-testunpack)
+- [`bs update`](#bs-update)
 - [`bs wiki`](#bs-wiki)
 - [`bs help [COMMAND]`](#bs-help-command)
 - [`bs plugins`](#bs-plugins)
@@ -865,6 +866,27 @@ ALIASES
 ```
 
 _See code: [src/commands/test/unpack.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/test/unpack.ts)_
+
+## [`bs update`](#bs-update)
+
+Update your CLI to the latest version.
+
+```text
+USAGE
+  $ bs update [--branch <value>]
+
+FLAGS
+  --branch=<value>  [default: main] Github branch to pull the update from
+
+DESCRIPTION
+  Since bs isn't published to any registry, you can use this command to automatically update your github repo
+  dependency.
+
+  If this command isn't working for some reason, you can manually run `pnpm add daymxn/bs-cli`, and pnpm will pull the
+  latest version.
+```
+
+_See code: [src/commands/update.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/update.ts)_
 
 ## [`bs wiki`](#bs-wiki)
 
