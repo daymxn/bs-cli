@@ -121,7 +121,7 @@
     "prereprod": "pnpm build",
     "format": "eslint . --fix",
     "manifest": "oclif manifest",
-    "prepare": "pnpm build",
+    "prepare": "pnpm build && pnpm manifest",
     "readme": "pnpm reprod readme",
     "update": "pnpm readme && pnpm manifest",
     "preupdate": "shx rm -f oclif.manifest.json"
