@@ -1,0 +1,22 @@
+{
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"files.eol": "\n",
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"eslint.run": "onType",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	  },
+	  "eslint.validate": [
+		"typescript",
+		"typescriptreact"
+	],
+	"vscode-color-picker.languages": [
+		"javascript",
+		"typescript",
+		"json",
+		"jsonc"
+	]
+}
