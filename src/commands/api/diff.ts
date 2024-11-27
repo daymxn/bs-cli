@@ -20,14 +20,13 @@ import { UserConfig } from "#src/user-config/loaders.js";
 import { run } from "#src/util/apps.js";
 import { ApplicationError, extendError } from "#src/util/errors.js";
 import { backupFile, existsAsync, restoreFile } from "#src/util/files.js";
-import { codeBlock } from "#src/util/markup.js";
+import { codeBlock, inlineCode } from "#src/util/markup.js";
 import { Command, Flags } from "@oclif/core";
 import { readdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import RollupCommands from "../rollup/index.js";
 import ApiExportCommand from "./export.js";
-import ApiUpdateCommand from "./update.js";
 
 type Flags<T extends typeof Command> = T["flags"];
 
@@ -113,7 +112,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
       if (this.flags.exit) {
         throw new ApplicationError("There are pending API changes.", {
           suggestions: [
-            `If these changes are expected, run ${this.nameOf(ApiUpdateCommand)} to update the API.`,
+            `If these changes are expected, run ${inlineCode("bs api:update")} to update the API.`,
           ],
         });
       }
@@ -153,7 +152,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
     return `Your change includes changes that impact the public API.
   
-  Please run ${this.nameOf(ApiUpdateCommand)} to update the public API file.
+  Please run ${inlineCode("bs api:update")} to update the public API file.
   
   **API Diff**
   ${codeBlock(diff, "diff")}
@@ -191,7 +190,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
     throw new ApplicationError("Could not find an API file to diff against.", {
       suggestions: [
-        `Run ${this.nameOf(ApiExportCommand)} to create one.`,
+        `Run ${inlineCode("bs api:export")} to create one.`,
         "You can manually provide a path to an api file with the --input flag.",
       ],
     });
