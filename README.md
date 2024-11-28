@@ -4,16 +4,31 @@ bs
 
 > Common build scripts for my rbxts projects.
 
+<p align="left">
+<a alt="Released version" href="https://www.npmjs.com/package/@daymxn/bs">
+<img src="https://img.shields.io/npm/v/%40daymxn%2Fbs?style=flat-square"></a>
+<img alt="Last release date" src="https://img.shields.io/github/release-date/daymxn/bs-cli?label=last%20release">
+<a alt="Last commit date" href="https://github.com/daymxn/bs-cli/commits/main/">
+<img src="https://img.shields.io/github/last-commit/daymxn/bs-cli/main?style=flat-square"></a>
+<a alt="Open issues" href="https://github.com/daymxn/bs-cli/issues">
+<img src="https://img.shields.io/github/issues/daymxn/bs-cli?style=flat-square"></a>
+<img alt="Code size" src="https://img.shields.io/github/languages/code-size/daymxn/bs-cli?style=flat-square">
+<a alt="License" href="https://github.com/daymxn/bs-cli/blob/main/LICENSE">
+<img src="https://img.shields.io/github/license/daymxn/bs-cli?style=flat-square"></a>
+</p>
+
+---
+
 ## Demo
 
 ![help output](static/demo.png)
 
 ## Installation
 
-Since `bs` isn't publish to npm directly, you'll have to pull it from this repo.
+You can install `bs` from npm, preferably as a `devDependency`.
 
 ```sh
-pnpm add -D daymxn/bs-cli
+pnpm add -D @daymxn/bs
 ```
 
 You may also want to create a config file to customize a variety of default

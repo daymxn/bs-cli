@@ -19,21 +19,14 @@ import { BaseCommand } from "#src/commands/base-command.js";
 
 import TestRunCommand from "./run.js";
 
-export default class TestReportCommand extends BaseCommand<
-  typeof TestReportCommand
-> {
-  static override description =
-    "Shorthand for calling run with prefilled arguments.";
+export default class TestReportCommand extends BaseCommand<typeof TestReportCommand> {
+  static override description = "Shorthand for calling run with prefilled arguments.";
 
   static override enableJsonFlag = true;
 
-  static override summary =
-    "Generate json and markdown files reporting unit test results.";
+  static override summary = "Generate json and markdown files reporting unit test results.";
 
   public async run() {
-    return TestRunCommand.run(
-      ["--no-console", "--exit", "--report"],
-      this.config
-    );
+    return TestRunCommand.run(["--no-console", "--exit", "--report"], this.config);
   }
 }

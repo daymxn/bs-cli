@@ -2,17 +2,24 @@
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"files.eol": "\n",
 	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 		"editor.formatOnSave": true
 	},
 	"eslint.run": "onType",
+	"eslint.useFlatConfig": true,
+	"eslint.format.enable": true,
+	"eslint.options": {
+      "flags": [
+        "unstable_ts_config"
+      ]
+    },
+	"eslint.validate": [
+      "typescript",
+      "typescriptreact"
+    ],
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit"
-	  },
-	  "eslint.validate": [
-		"typescript",
-		"typescriptreact"
-	],
+	  "source.fixAll.eslint": "explicit"
+	},
 	"vscode-color-picker.languages": [
 		"javascript",
 		"typescript",

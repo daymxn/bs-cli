@@ -17,10 +17,7 @@
 
 import { ParseError, printParseErrorCode } from "jsonc-parser";
 
-function offsetToLineColumn(
-  fileContents: string,
-  offset: number
-): [line: number, column: number] {
+function offsetToLineColumn(fileContents: string, offset: number): [line: number, column: number] {
   const lines = fileContents.slice(0, offset - 1).split("\n");
 
   const line = lines.length;
@@ -36,9 +33,6 @@ export function convertErrorToString(fileContents: string, error: ParseError) {
   return `[${line}:${column}] ${errorText}`;
 }
 
-export function formatParsingErrors(
-  fileContents: string,
-  errors: ParseError[]
-) {
+export function formatParsingErrors(fileContents: string, errors: ParseError[]) {
   return errors.map((it) => convertErrorToString(fileContents, it));
 }

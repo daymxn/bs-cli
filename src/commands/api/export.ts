@@ -20,13 +20,10 @@ import { pnpm } from "#src/util/apps.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
 import { Flags } from "@oclif/core";
 
-export default class ApiExportCommand extends BaseCommand<
-  typeof ApiExportCommand
-> {
+export default class ApiExportCommand extends BaseCommand<typeof ApiExportCommand> {
   static override aliases = ["api:extract", "api:create"];
 
-  static override description =
-    "Uses `api-extractor` to extract the public API.";
+  static override description = "Uses `api-extractor` to extract the public API.";
 
   static override enableJsonFlag = true;
 

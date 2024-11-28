@@ -1,7 +1,7 @@
 {
-  "name": "bs-cli",
+  "name": "@daymxn/bs",
   "description": "Common build scripts for my rbxts projects.",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "Daymon Littrell-Reyes",
   "bin": {
     "bs": "./bin/run.js",
@@ -9,13 +9,13 @@
   },
   "bugs": "https://github.com/daymxn/bs-cli/issues",
   "dependencies": {
-    "@oclif/core": "^4",
-    "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^5",
+    "@oclif/core": "^4.0.33",
+    "@oclif/plugin-help": "^6.2.18",
+    "@oclif/plugin-plugins": "^5.4.17",
     "@types/ejs": "^3.1.5",
     "@verdaccio/config": "6.0.0-6-next.76",
     "ejs": "^3.1.10",
-    "eslint": "^8.57.1",
+    "eslint": "9.15.0",
     "execa": "^9.5.1",
     "fs-extra": "^11.2.0",
     "github-slugger": "^2.0.0",
@@ -30,31 +30,36 @@
     "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
+    "@eslint/js": "^9.15.0",
     "@oclif/prettier-config": "^0.2.1",
     "@types/eslint": "^9.6.1",
+    "@types/eslint__js": "^8.42.3",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.0",
     "@types/normalize-package-data": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
     "@verdaccio/types": "^10.8.0",
-    "eslint-config-oclif": "^5",
-    "eslint-config-oclif-typescript": "^3",
-    "eslint-config-prettier": "^9",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-headers": "^1.2.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "oclif": "^4",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "jiti": "^2.4.0",
+    "oclif": "^4.15.29",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "shx": "^0.3.3",
-    "ts-node": "^10",
-    "typescript": "^5.6.3"
+    "shx": "^0.3.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
   },
   "peerDependencies": {
     "@changesets/cli": "^2",
     "@microsoft/api-documenter": "^7",
     "@microsoft/api-extractor": "^7",
     "eslint": ">=8.0.0",
-    "tsup": "^8",
-    "ts-node": "^10"
+    "ts-node": "^10",
+    "tsup": "^8"
   },
   "peerDependenciesMeta": {
     "@microsoft/api-extractor": {
@@ -86,6 +91,9 @@
     "/static/theme.json",
     "/static/assets"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://github.com/daymxn/bs-cli",
   "keywords": [
     "oclif",
@@ -119,12 +127,15 @@
     "prod": "pnpm exec ./bin/run.cmd",
     "reprod": "pnpm exec ./bin/run.cmd",
     "prereprod": "pnpm build",
-    "format": "eslint . --fix",
+    "format": "eslint . --flag unstable_ts_config --fix",
     "manifest": "oclif manifest",
-    "postinstall": "pnpm build && pnpm manifest",
     "readme": "pnpm reprod readme",
     "update": "pnpm readme && pnpm manifest",
-    "preupdate": "shx rm -f oclif.manifest.json"
+    "preupdate": "shx rm -f oclif.manifest.json",
+    "prepublish": "pnpm update",
+    "change": "pnpm changeset add",
+    "change:version": "pnpm changeset version",
+    "push:tags": "git push --follow-tags"
   },
   "imports": {
     "#src/*": "./dist/*"

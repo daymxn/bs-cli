@@ -21,13 +21,10 @@ import { pnpm } from "#src/util/apps.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
 import { Flags } from "@oclif/core";
 
-export default class DocsGenerateCommand extends BaseCommand<
-  typeof DocsGenerateCommand
-> {
+export default class DocsGenerateCommand extends BaseCommand<typeof DocsGenerateCommand> {
   static override aliases = ["docs:extract", "docs:create"];
 
-  static override description =
-    "Uses `api-documenter` to generate the markdown files.";
+  static override description = "Uses `api-documenter` to generate the markdown files.";
 
   static override enableJsonFlag = true;
 
@@ -44,8 +41,7 @@ export default class DocsGenerateCommand extends BaseCommand<
     }),
   };
 
-  static override summary =
-    "Export the public API as markdown files for use in the wiki.";
+  static override summary = "Export the public API as markdown files for use in the wiki.";
 
   public async run() {
     if (!UserConfig.docs) {
@@ -61,9 +57,7 @@ export default class DocsGenerateCommand extends BaseCommand<
     this.d("Using input files from: %s", input);
     this.d("Exporting markdown files to: %s", output);
 
-    const builder = new FlagBuilder()
-      .add("input-folder", input)
-      .add("output-folder", output);
+    const builder = new FlagBuilder().add("input-folder", input).add("output-folder", output);
 
     await this.validatePackageInstalled("@microsoft/api-documenter");
 

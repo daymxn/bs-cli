@@ -20,9 +20,7 @@ import { UserConfig } from "#src/user-config/loaders.js";
 import { pnpm } from "#src/util/apps.js";
 import { Flags } from "@oclif/core";
 
-export default class TestBuildCommand extends BaseCommand<
-  typeof TestBuildCommand
-> {
+export default class TestBuildCommand extends BaseCommand<typeof TestBuildCommand> {
   static override aliases = ["test:export"];
 
   static override description = "Uses `rojo build` to create the rbxl file.";
@@ -41,8 +39,7 @@ export default class TestBuildCommand extends BaseCommand<
     }),
   };
 
-  static override summary =
-    "Build a rbxl file of your library (to use for testing).";
+  static override summary = "Build a rbxl file of your library (to use for testing).";
 
   public async run() {
     this.i("Building rbxl file for testing");

@@ -20,13 +20,7 @@ import { UserConfig } from "#src/user-config/loaders.js";
 import { run } from "#src/util/apps.js";
 import { ApplicationError } from "#src/util/errors.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
-import {
-  TestReport,
-  TestStatus,
-  Tree,
-  createColors,
-  parseFromJson,
-} from "#src/util/test-report.js";
+import { TestReport, TestStatus, Tree, createColors, parseFromJson } from "#src/util/test-report.js";
 import { Flags } from "@oclif/core";
 import { copyFile } from "node:fs/promises";
 import { file } from "tmp-promise";
@@ -81,8 +75,7 @@ export default class TestRunCommand extends BaseCommand<typeof TestRunCommand> {
     }),
     trim: Flags.boolean({
       allowNo: true,
-      description:
-        "If all tests share a common category, trim it from the output.",
+      description: "If all tests share a common category, trim it from the output.",
     }),
   };
 
@@ -96,8 +89,7 @@ export default class TestRunCommand extends BaseCommand<typeof TestRunCommand> {
     const rebuild = this.flags.rebuild ?? UserConfig.tests.rebuild;
     const rbxl = this.flags.rbxl ?? UserConfig.tests.rbxlOutputPath;
     const jsonPath = this.flags.jsonPath ?? UserConfig.tests.jsonReportPath;
-    const markdownPath =
-      this.flags.markdownPath ?? UserConfig.tests.markdownReportPath;
+    const markdownPath = this.flags.markdownPath ?? UserConfig.tests.markdownReportPath;
     const { exit, report } = this.flags;
 
     const flags = new FlagBuilder();
@@ -126,10 +118,7 @@ export default class TestRunCommand extends BaseCommand<typeof TestRunCommand> {
     }
 
     if (report && markdownPath) {
-      this.d(
-        "Exporting a copy of the test report as markdown: %s",
-        markdownPath
-      );
+      this.d("Exporting a copy of the test report as markdown: %s", markdownPath);
       await copyFile(tempMarkdown, markdownPath);
     }
 
@@ -140,9 +129,7 @@ export default class TestRunCommand extends BaseCommand<typeof TestRunCommand> {
     }
 
     if (exit && result.fail.length > 0) {
-      throw new ApplicationError(
-        `There were ${result.fail.length} test failures.`
-      );
+      throw new ApplicationError(`There were ${result.fail.length} test failures.`);
     }
 
     return result;
@@ -163,9 +150,7 @@ export default class TestRunCommand extends BaseCommand<typeof TestRunCommand> {
 
     tree.filterForStatus(statusesToPrint);
 
-    const reportStr = trim
-      ? tree.removeCommonPrefix().toString()
-      : tree.toString();
+    const reportStr = trim ? tree.removeCommonPrefix().toString() : tree.toString();
 
     return `${reportStr}\n
 

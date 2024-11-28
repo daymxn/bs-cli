@@ -21,11 +21,8 @@ import { Flags } from "@oclif/core";
 
 import ApiDiffCommand from "./diff.js";
 
-export default class ApiReportCommand extends BaseCommand<
-  typeof ApiReportCommand
-> {
-  static override description =
-    "Shorthand for calling `api diff` with preconfigured flags.";
+export default class ApiReportCommand extends BaseCommand<typeof ApiReportCommand> {
+  static override description = "Shorthand for calling `api diff` with preconfigured flags.";
 
   static override enableJsonFlag = true;
 
@@ -36,8 +33,7 @@ export default class ApiReportCommand extends BaseCommand<
     }),
   };
 
-  static override summary =
-    "Generate a report file dictating any pending public API changes.";
+  static override summary = "Generate a report file dictating any pending public API changes.";
 
   public async run() {
     this.i("Checking the public API for changes");

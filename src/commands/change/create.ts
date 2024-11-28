@@ -18,9 +18,7 @@
 import { BaseCommand } from "#src/commands/base-command.js";
 import { pnpm } from "#src/util/apps.js";
 
-export default class ChangeCreateCommand extends BaseCommand<
-  typeof ChangeCreateCommand
-> {
+export default class ChangeCreateCommand extends BaseCommand<typeof ChangeCreateCommand> {
   static override aliases = ["change:add"];
 
   static override enableJsonFlag = false;

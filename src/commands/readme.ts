@@ -18,13 +18,7 @@
 import { BaseCommand } from "#src/commands/base-command.js";
 import { existsAsync } from "#src/util/files.js";
 import { codeBlock, inlineCode } from "#src/util/markup.js";
-import {
-  commandUsage,
-  filterCommands,
-  getCommandStrategy,
-  getCommandTarget,
-  hasDependency,
-} from "#src/util/oclif.js";
+import { commandUsage, filterCommands, getCommandStrategy, getCommandTarget, hasDependency } from "#src/util/oclif.js";
 import { Command, CommandHelp, Config, Flags, Interfaces } from "@oclif/core";
 import { render } from "ejs";
 import GithubSlugger from "github-slugger";
@@ -38,8 +32,7 @@ import stripAnsi from "strip-ansi";
 const slugger = new GithubSlugger();
 
 export default class ReadmeCommand extends BaseCommand<typeof ReadmeCommand> {
-  public static description =
-    "This is an internal plugin only intended to be used on the bs repo itself.";
+  public static description = "This is an internal plugin only intended to be used on the bs repo itself.";
 
   public static flags = {
     output: Flags.string({
@@ -62,15 +55,11 @@ export default class ReadmeCommand extends BaseCommand<typeof ReadmeCommand> {
 
     const commands = filterCommands(this.config.commands);
 
-    const results = await Promise.all(
-      commands.map((it) => ReadmeGenerator.from(it, this.config).run())
-    );
+    const results = await Promise.all(commands.map((it) => ReadmeGenerator.from(it, this.config).run()));
 
     const content = map(results, "content").join("\n\n").trim();
 
-    const toc = results
-      .map((it) => format("- [`%s`](#%s)", it.name, it.anchor))
-      .join("\n");
+    const toc = results.map((it) => format("- [`%s`](#%s)", it.name, it.anchor)).join("\n");
 
     const text = compact(["# Commands", toc, content]).join("\n\n");
 
@@ -134,9 +123,7 @@ class ReadmeGenerator extends CommandHelp {
     // use local path if its in our package but we dont have a repo set
     const repoPath = isLocal && !repo ? undefined : "/blob/main/";
 
-    const template =
-      plugin.pjson.oclif.repositoryPrefix ??
-      "<%- repo %><%- repoPath %><%- commandPath %>";
+    const template = plugin.pjson.oclif.repositoryPrefix ?? "<%- repo %><%- repoPath %><%- commandPath %>";
 
     const rendered = render(template, {
       c: command,
@@ -160,9 +147,7 @@ class ReadmeGenerator extends CommandHelp {
    */
   protected filterGlobalFlags() {
     this.command.flags = Object.fromEntries(
-      Object.entries(this.command.flags).filter(
-        ([_, value]) => value.helpGroup !== "GLOBAL"
-      )
+      Object.entries(this.command.flags).filter(([_, value]) => value.helpGroup !== "GLOBAL"),
     );
   }
 

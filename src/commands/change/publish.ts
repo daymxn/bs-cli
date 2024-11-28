@@ -22,9 +22,7 @@ import { extendError } from "#src/util/errors.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
 import { Flags } from "@oclif/core";
 
-export default class ChangePublishCommand extends BaseCommand<
-  typeof ChangePublishCommand
-> {
+export default class ChangePublishCommand extends BaseCommand<typeof ChangePublishCommand> {
   static override description =
     "Uses the `changeset publish` command to perform some automations during publishing (such as generating git tags).";
 
@@ -63,8 +61,7 @@ export default class ChangePublishCommand extends BaseCommand<
     await this.validatePackageInstalled("@changesets/cli");
 
     const gitTags = this.flags["git-tag"] ?? UserConfig.release.gitTags;
-    const pushTags =
-      gitTags && (this.flags["push-tag"] ?? UserConfig.release.autoPushTags);
+    const pushTags = gitTags && (this.flags["push-tag"] ?? UserConfig.release.autoPushTags);
     const tag = this.flags.tag ?? UserConfig.release.tag;
     const snapshot = this.flags.snapshot ?? UserConfig.release.snapshot;
     const snapshotTag = snapshot && tag ? tag : undefined;
@@ -94,7 +91,7 @@ export default class ChangePublishCommand extends BaseCommand<
         this.d("Publishing a snapshot release");
 
         this.w(
-          "You're publishing a snapshot release without a tag. This will update the latest tag to point to your snapshot release."
+          "You're publishing a snapshot release without a tag. This will update the latest tag to point to your snapshot release.",
         );
       }
     } else if (tag) {

@@ -23,27 +23,15 @@ import { pnpm } from "#src/util/apps.js";
 import { ApplicationError } from "#src/util/errors.js";
 import { inlineCode } from "#src/util/markup.js";
 import { Flags } from "@oclif/core";
-import {
-  DEFAULT_UPLINK,
-  PACKAGE_ACCESS,
-  ROLES,
-  findConfigFile,
-  fromJStoYAML,
-} from "@verdaccio/config";
+import { DEFAULT_UPLINK, PACKAGE_ACCESS, ROLES, findConfigFile, fromJStoYAML } from "@verdaccio/config";
 import { writeFile } from "node:fs/promises";
 import { parseConfigFile } from "verdaccio";
 
 const HOST = "__BS_HOST_PLACEHOLDER__";
 const PORT = "__BS_PORT_PLACEHOLDER__";
 
-export default class RegistrySetupCommand extends BaseCommand<
-  typeof RegistrySetupCommand
-> {
-  static override aliases = [
-    "registry:create",
-    "registry:install",
-    "registry:init",
-  ];
+export default class RegistrySetupCommand extends BaseCommand<typeof RegistrySetupCommand> {
+  static override aliases = ["registry:create", "registry:install", "registry:init"];
 
   static override description = `Installs verdaccio to host the registry, pm2 to run it in the background, and updates the verdaccio config to allow fake authorization access.`;
 
@@ -122,16 +110,11 @@ export default class RegistrySetupCommand extends BaseCommand<
     this.d("Converting verdaccio config to a yaml string");
     const str = fromJStoYAML(verdConfig);
     if (!str) {
-      this.v("Verdaccio config: %s", JSON.stringify(verdConfig, null, 2));
+      this.v("Verdaccio config: %s", JSON.stringify(verdConfig, undefined, 2));
 
-      throw new ApplicationError(
-        "Failed to convert verdaccio config to a yaml string.",
-        {
-          suggestions: [
-            `Run with ${inlineCode(`--loglevel="trace"`)} to see a stringified version of the config.`,
-          ],
-        }
-      );
+      throw new ApplicationError("Failed to convert verdaccio config to a yaml string.", {
+        suggestions: [`Run with ${inlineCode(`--loglevel="trace"`)} to see a stringified version of the config.`],
+      });
     }
 
     this.v("Using host: %s", host);
@@ -143,10 +126,7 @@ export default class RegistrySetupCommand extends BaseCommand<
 
     await writeFile(verdConfig.configPath, fixedStr, "utf8");
 
-    this.i(
-      "Local registry setup! Run `%s` to start the server.",
-      "pnpm bs registry start"
-    );
+    this.i("Local registry setup! Run `%s` to start the server.", "pnpm bs registry start");
 
     return {
       message: "Local registry setup.",

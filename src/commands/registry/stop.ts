@@ -20,17 +20,10 @@ import { UserConfig } from "#src/user-config/loaders.js";
 import { pnpm } from "#src/util/apps.js";
 import { Flags } from "@oclif/core";
 
-export default class RegistryStopCommand extends BaseCommand<
-  typeof RegistryStopCommand
-> {
-  static override aliases = [
-    "registry:kill",
-    "registry:despawn",
-    "registry:shutdown",
-  ];
+export default class RegistryStopCommand extends BaseCommand<typeof RegistryStopCommand> {
+  static override aliases = ["registry:kill", "registry:despawn", "registry:shutdown"];
 
-  static override description =
-    "Only applies to servers started with pm2 (without the --local flag).";
+  static override description = "Only applies to servers started with pm2 (without the --local flag).";
 
   static override enableJsonFlag = true;
 

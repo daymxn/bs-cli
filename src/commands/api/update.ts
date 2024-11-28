@@ -20,13 +20,10 @@ import { BaseCommand } from "#src/commands/base-command.js";
 import RollupCommands from "../rollup/index.js";
 import ApiExportCommand from "./export.js";
 
-export default class ApiUpdateCommand extends BaseCommand<
-  typeof ApiUpdateCommand
-> {
+export default class ApiUpdateCommand extends BaseCommand<typeof ApiUpdateCommand> {
   static override aliases = ["api:refresh", "api:save"];
 
-  static override description =
-    "Generates the rollup file and runs `bs api export`.";
+  static override description = "Generates the rollup file and runs `bs api export`.";
 
   static override enableJsonFlag = true;
 

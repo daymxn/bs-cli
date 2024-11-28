@@ -23,26 +23,18 @@ export function values<T extends object>(object: T): ObjectValues<T> {
   return Object.values(object);
 }
 
-export function lowercaseKeys<T extends object>(
-  object: T
-): LowercaseObjectKeys<T> {
+export function lowercaseKeys<T extends object>(object: T): LowercaseObjectKeys<T> {
   return keys(object).map((it) => it.toString().toLowerCase()) as never;
 }
 
-export function withLowercaseKeys<T extends object>(
-  object: T
-): LowercaseKeys<T> {
-  return Object.fromEntries(
-    entries(object).map((it) => it[0].toString().toLowerCase()) as never
-  ) as never;
+export function withLowercaseKeys<T extends object>(object: T): LowercaseKeys<T> {
+  return Object.fromEntries(entries(object).map((it) => it[0].toString().toLowerCase()) as never) as never;
 }
 
-export function entries<T extends object>(
-  object: T
-): Array<[ObjectKey<T>, ObjectValue<T>]> {
+export function entries<T extends object>(object: T): Array<[ObjectKey<T>, ObjectValue<T>]> {
   return Object.entries(object) as never;
 }
 
 export function jsonToString(json: object, pretty: boolean = true) {
-  return pretty ? JSON.stringify(json, null, 2) : JSON.stringify(json);
+  return pretty ? JSON.stringify(json, undefined, 2) : JSON.stringify(json);
 }

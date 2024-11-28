@@ -22,9 +22,7 @@ import { FlagBuilder } from "#src/util/flag-builder.js";
 import { Flags } from "@oclif/core";
 import { readFile } from "node:fs/promises";
 
-export default class ChangeStatusCommand extends BaseCommand<
-  typeof ChangeStatusCommand
-> {
+export default class ChangeStatusCommand extends BaseCommand<typeof ChangeStatusCommand> {
   static override aliases = ["change:info", "change:dump"];
 
   static override enableJsonFlag = true;
@@ -36,19 +34,16 @@ export default class ChangeStatusCommand extends BaseCommand<
       helpValue: "<path>",
     }),
     since: Flags.string({
-      description:
-        "Only display information about changes since a specific branch or git tag.",
+      description: "Only display information about changes since a specific branch or git tag.",
       helpValue: "<string>",
     }),
     verbose: Flags.boolean({
       char: "v",
-      description:
-        "Get information about the new versions and include a link to matching changeset files.",
+      description: "Get information about the new versions and include a link to matching changeset files.",
     }),
   };
 
-  static override summary =
-    "Get information about pending changes for the next release";
+  static override summary = "Get information about pending changes for the next release";
 
   public async run() {
     this.i("Getting changeset status");

@@ -22,13 +22,11 @@ import TestRunCommand from "./run.js";
 export default class TestCommands extends BaseCommand<typeof TestCommands> {
   static override aliases = ["tests"];
 
-  static override description =
-    "Running this directly will run the `run` command.";
+  static override description = "Running this directly will run the `run` command.";
 
   static override enableJsonFlag = true;
 
-  static override summary =
-    "Commands for running unit tests locally with lune.";
+  static override summary = "Commands for running unit tests locally with lune.";
 
   public async run() {
     return TestRunCommand.run([], this.config);

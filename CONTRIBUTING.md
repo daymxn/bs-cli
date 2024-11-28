@@ -161,3 +161,61 @@ the readme, and update the manifest- all at once.
 ```sh
 pnpm run update
 ```
+
+### Changesets
+
+We use [changesets](https://github.com/changesets/changesets) for our release notes and version bumping.
+
+When submitting a change that should be apart of a release, you
+can run the `change` command.
+
+```sh
+pnpm change
+```
+
+It will prompt you with options for setting the message and version type.
+
+> [!IMPORTANT]
+> If your change impacts the public API, ensure you're choosing the appropriate version type (according to [semver](https://semver.org/)).
+>
+> Alternatively, just follow the given table:
+>
+> `major` = Removes something from the public api, or changes the behavior of something in a breaking manner.
+>
+> `minor` = Adds to the public api.
+>
+> `patch` = Fixes a bug. The bug fix must be done in a non breaking manner, other-wise it's a major change.
+
+#### Additional Commands
+
+You can check out the help section of `changeset` to see a list of available commands.
+
+```sh
+pnpm changeset --help
+```
+
+### Releasing
+
+To invoke a release, you'll need to pull the `main` branch
+and run the `change version` command.
+
+```sh
+pnpm change:version
+```
+
+This will automatically bump the releasing projects.
+
+After merging these changes back into `main`, you can move forward
+with the actual publishing.
+
+```sh
+pnpm publish
+```
+
+This will publish the releasing projects to npm, with the generated changelogs.
+
+Finally, push the git tags for the release to the repo.
+
+```sh
+pnpm push:tags
+```

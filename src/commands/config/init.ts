@@ -22,9 +22,7 @@ import { Flags } from "@oclif/core";
 import ConfigCreateCommand from "./create.js";
 import ConfigSchemaCommand from "./schema.js";
 
-export default class ConfigInitCommand extends BaseCommand<
-  typeof ConfigInitCommand
-> {
+export default class ConfigInitCommand extends BaseCommand<typeof ConfigInitCommand> {
   static override description = `
 Creates the config file and generates the json schema for autocompletion.
 

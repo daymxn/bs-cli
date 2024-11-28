@@ -22,15 +22,8 @@ import { makeUrl } from "#src/util/strings.js";
 import { Flags } from "@oclif/core";
 import { ProcessDescription } from "pm2";
 
-export default class RegistryStartCommand extends BaseCommand<
-  typeof RegistryStartCommand
-> {
-  static override aliases = [
-    "registry:startup",
-    "registry:spawn",
-    "registry:restart",
-    "registry:refresh",
-  ];
+export default class RegistryStartCommand extends BaseCommand<typeof RegistryStartCommand> {
+  static override aliases = ["registry:startup", "registry:spawn", "registry:restart", "registry:refresh"];
 
   static override description =
     "When ran without the `--local` flag, this will use the pm2 library to spawn a background service for the server.";
@@ -73,16 +66,13 @@ export default class RegistryStartCommand extends BaseCommand<
 
       const webpanel = `${host}:${port}`;
 
-      const activeApps = await pnpmJson<ProcessDescription[]>(
-        "exec pm2 jlist",
-        true
-      );
+      const activeApps = await pnpmJson<ProcessDescription[]>("exec pm2 jlist", true);
       const app = activeApps.filter((it) => it.name === name);
       if (app.length > 0) {
         if (app.length > 1) {
           this.w(
             "You have multiple apps in pm2 named %s. You may want to run `pm2 delete` to delete some of them.",
-            name
+            name,
           );
         }
 

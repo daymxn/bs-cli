@@ -18,13 +18,11 @@
 import { ZodError, ZodObject, ZodRawShape, ZodSchema, preprocess } from "zod";
 
 export function withDefaults<T extends ZodObject<ZodRawShape>>(schema: T) {
-  return preprocess(
-    (value) => (value === undefined ? schema.parse({}) : value),
-    schema
-  );
+  return preprocess((value) => (value === undefined ? schema.parse({}) : value), schema);
 }
 
 export function defaultNull<T>(schema: ZodSchema<T>) {
+  // eslint-disable-next-line unicorn/no-null
   return schema.nullish().default(null);
 }
 
