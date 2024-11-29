@@ -50,6 +50,8 @@ export default class ApiExportCommand extends BaseCommand<typeof ApiExportComman
 
     await pnpm(`api-extractor run ${runFlags}`);
 
+    this.d("Public API exported");
+
     return {
       message: "Public API exported.",
     };

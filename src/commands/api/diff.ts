@@ -127,7 +127,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
   private async generateDiff(oldFile: string, newFile: string) {
     this.d("Finding diff between APIs");
 
-    return run(`git diff --no-index ${oldFile} ${newFile}`).catch((e) => {
+    return run("git", ["diff", "--no-index", oldFile, newFile]).catch((e) => {
       // remove everything before the diff message (like ts exception message)
       if (e?.exitCode === 1) return (e.message as string).replace(/([^]*?)^(?=diff)/m, "");
 
