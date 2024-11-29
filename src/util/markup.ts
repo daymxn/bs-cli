@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { slug } from "github-slugger";
+import { format } from "node:util";
+
 export function codeBlock(code: string, language: string = "") {
   const ticks = "```";
   return `${ticks}${language}\n${code}\n${ticks}`;
@@ -22,4 +25,12 @@ export function codeBlock(code: string, language: string = "") {
 
 export function inlineCode(code: string) {
   return `\`${code}\``;
+}
+
+export function link(displayName: string, link: string = slug(displayName)) {
+  if (link.startsWith("http")) {
+    return `[${displayName}](${link})`;
+  }
+
+  return format("[%s](#%s)", displayName, link);
 }

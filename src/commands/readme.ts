@@ -17,19 +17,17 @@
 
 import { BaseCommand } from "#src/commands/base-command.js";
 import { existsAsync } from "#src/util/files.js";
-import { codeBlock, inlineCode } from "#src/util/markup.js";
+import { codeBlock, inlineCode, link } from "#src/util/markup.js";
 import { commandUsage, filterCommands, getCommandStrategy, getCommandTarget, hasDependency } from "#src/util/oclif.js";
 import { Command, CommandHelp, Config, Flags, Interfaces } from "@oclif/core";
 import { render } from "ejs";
-import GithubSlugger from "github-slugger";
+import { slug } from "github-slugger";
 import { compact, map } from "lodash-es";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { format } from "node:util";
 import normalize from "normalize-package-data";
 import stripAnsi from "strip-ansi";
-
-const slugger = new GithubSlugger();
 
 export default class ReadmeCommand extends BaseCommand<typeof ReadmeCommand> {
   public static description = "This is an internal plugin only intended to be used on the bs repo itself.";
@@ -59,9 +57,16 @@ export default class ReadmeCommand extends BaseCommand<typeof ReadmeCommand> {
 
     const content = map(results, "content").join("\n\n").trim();
 
-    const toc = results.map((it) => format("- [`%s`](#%s)", it.name, it.anchor)).join("\n");
+    const globalFlagsHeader = {
+      name: "Global Flags",
+      anchor: slug("Global Flags"),
+    };
 
-    const text = compact(["# Commands", toc, content]).join("\n\n");
+    const toc = [globalFlagsHeader, ...results].map(({ name, anchor }) => `- ${link(name, anchor)}`).join("\n");
+
+    const globalFlags = [`## ${link(globalFlagsHeader.name, globalFlagsHeader.anchor)}`, this.getGlobalFlags()];
+
+    const text = compact(["# Commands", toc, ...globalFlags, content]).join("\n\n");
 
     await writeFile(output!, `${text}\n`);
 
@@ -71,6 +76,24 @@ export default class ReadmeCommand extends BaseCommand<typeof ReadmeCommand> {
       message: "Readme commands updated",
       path: output,
     };
+  }
+
+  /**
+   * Generates a section for showcasing the global flags.
+   *
+   * @returns A codeblock of the global flags.
+   */
+  protected getGlobalFlags() {
+    const command = this.config.findCommand(BaseCommand.id!, { must: true });
+
+    const help = new CommandHelp(command, this.config, {
+      maxWidth: 120,
+      respectNoCacheDefault: true,
+      stripAnsi: true,
+      sections: ["flags"],
+    });
+
+    return codeBlock(help.generate().split("\n").slice(1).join("\n"), "text");
   }
 }
 
@@ -251,12 +274,13 @@ class ReadmeGenerator extends CommandHelp {
   public async run() {
     const { command, config } = this;
     const name = this.computeName();
-    const anchor = slugger.slug(name);
+    const displayName = inlineCode(name);
+    const anchor = slug(name);
 
     this.filterGlobalFlags();
     this.fixDescription();
 
-    const header = `## [${inlineCode(name)}](#${anchor})`;
+    const header = `## ${link(displayName, anchor)}`;
     const text = render(command.summary ?? command.description ?? "", {
       command,
       config,
@@ -265,14 +289,14 @@ class ReadmeGenerator extends CommandHelp {
     this.prepareDescription();
 
     const body = codeBlock(stripAnsi(this.generate()), "text");
-    const link = await this.createLink();
+    const sourceLink = await this.createLink();
 
-    const sections = compact([header, text?.trim(), body, link]);
+    const sections = compact([header, text?.trim(), body, sourceLink]);
 
     return {
       anchor,
       content: sections.join("\n\n"),
-      name,
+      name: displayName,
     };
   }
 }

@@ -1,5 +1,6 @@
 # Commands
 
+- [Global Flags](#global-flags)
 - [`bs api`](#bs-api)
 - [`bs api:check`](#bs-apicheck)
 - [`bs api:diff`](#bs-apidiff)
@@ -51,6 +52,25 @@
 - [`bs plugins:reset`](#bs-pluginsreset)
 - [`bs plugins:uninstall [PLUGIN]`](#bs-pluginsuninstall-plugin)
 - [`bs plugins:update`](#bs-pluginsupdate)
+
+## [Global Flags](#global-flags)
+
+```text
+  -B, --[no-]build         Toggle build related tasks.
+  -C, --config=<path>      Path to the bs config file.
+      --[no-]ci            Enable more verbose debug facilities, appropriate for CI usage.
+      --dev                Use the dev build of your library.
+      --[no-]docs          Toggle jsdoc/wiki related tasks.
+      --json               Format output as json.
+      --loglevel=<option>  Set the minimum log level to log.
+                           <options: trace|debug|info|warning|error>
+      --noBuildOrRollup    Disable build and rollup related tasks
+      --prod               Use the prod build of your library.
+      --[no-]rollup        Toggle rollup related tasks.
+      --[no-]silence       Disable logging from external tooling.
+      --[no-]stacktrace    Toggle stack trace logging for errors.
+      --[no-]tty           Force toggle TTY exclusive behaviors.
+```
 
 ## [`bs api`](#bs-api)
 
