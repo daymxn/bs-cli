@@ -1,7 +1,7 @@
 {
   "name": "@daymxn/bs",
   "description": "Common build scripts for my rbxts projects.",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "author": "Daymon Littrell-Reyes",
   "bin": {
     "bs": "./bin/run.js",
