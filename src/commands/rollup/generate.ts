@@ -18,19 +18,16 @@
 import { BaseCommand } from "#src/commands/base-command.js";
 import { UserConfig } from "#src/user-config/loaders.js";
 import { pnpm } from "#src/util/apps.js";
-import { resolve } from "node:path";
+import path from "node:path";
 
-export default class RollupGenerateCommand extends BaseCommand<
-  typeof RollupGenerateCommand
-> {
+export default class RollupGenerateCommand extends BaseCommand<typeof RollupGenerateCommand> {
   static override aliases = ["rollup:create", "rollup:run"];
 
   static override description = "Uses `tsup` to generate the rollup.";
 
   static override enableJsonFlag = true;
 
-  static override summary =
-    "Generate a single `.d.ts` file representing the API.";
+  static override summary = "Generate a single `.d.ts` file representing the API.";
 
   public async run() {
     if (!UserConfig.global.rollup) {
@@ -47,7 +44,7 @@ export default class RollupGenerateCommand extends BaseCommand<
 
     return {
       message: "Rollup generated.",
-      rollupFilePath: resolve(UserConfig.api.rollup),
+      rollupFilePath: path.resolve(UserConfig.api.rollup),
     };
   }
 }

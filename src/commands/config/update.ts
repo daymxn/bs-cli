@@ -22,9 +22,7 @@ import { Flags } from "@oclif/core";
 import ConfigCreateCommand from "./create.js";
 import ConfigSchemaCommand from "./schema.js";
 
-export default class ConfigUpdateCommand extends BaseCommand<
-  typeof ConfigUpdateCommand
-> {
+export default class ConfigUpdateCommand extends BaseCommand<typeof ConfigUpdateCommand> {
   static override description =
     "Useful when you want to quickly update your config file via global flags, or you've recently updated the CLI and want to also update your schema/config file";
 
@@ -34,8 +32,7 @@ export default class ConfigUpdateCommand extends BaseCommand<
     "update-config": Flags.boolean({
       allowNo: true,
       default: true,
-      description:
-        "Update your config file with the current values, without overwriting unchanged values.",
+      description: "Update your config file with the current values, without overwriting unchanged values.",
     }),
     "update-schema": Flags.boolean({
       allowNo: true,
@@ -45,25 +42,17 @@ export default class ConfigUpdateCommand extends BaseCommand<
     }),
   };
 
-  static override summary =
-    "Update your config file and the bs config json schema.";
+  static override summary = "Update your config file and the bs config json schema.";
 
   public async run() {
     this.i("Updating configuration files");
 
-    const {
-      config,
-      "update-config": updateConfig,
-      "update-schema": updateSchema,
-    } = this.flags;
+    const { config, "update-config": updateConfig, "update-schema": updateSchema } = this.flags;
 
     if (updateConfig) {
       this.d("Updating config file");
 
-      const createFlags = new FlagBuilder([
-        "force",
-        "preset",
-      ]).addValueIfPresent("path", config);
+      const createFlags = new FlagBuilder(["force", "preset"]).addValueIfPresent("path", config);
 
       await ConfigCreateCommand.run(createFlags.unpack(), this.config);
     } else {

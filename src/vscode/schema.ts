@@ -24,7 +24,7 @@ const jsonSchemasSchema = z
         fileMatch: z.array(z.string()),
         url: z.string(),
       })
-      .passthrough()
+      .passthrough(),
   )
   .optional()
   .default([]);

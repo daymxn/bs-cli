@@ -22,10 +22,6 @@ declare type LowercaseKeys<T extends object> = {
   [K in keyof T as K extends string ? Lowercase<K> : never]: T[K];
 };
 declare type ObjectKeys<T extends object> = Array<ObjectKey<T>>;
-declare type LowercaseObjectKeys<T extends object> = ObjectKeys<
-  LowercaseKeys<T>
->;
+declare type LowercaseObjectKeys<T extends object> = ObjectKeys<LowercaseKeys<T>>;
 
-declare type InferArrayType<T extends unknown[]> = T extends (infer V)[]
-  ? V
-  : never;
+declare type InferArrayType<T extends unknown[]> = T extends (infer V)[] ? V : never;

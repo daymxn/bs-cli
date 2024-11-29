@@ -23,20 +23,14 @@ import { existsAsync } from "#src/util/files.js";
 import { Flags } from "@oclif/core";
 import { findConfigFile } from "@verdaccio/config";
 import { readdir, rm } from "node:fs/promises";
-import { dirname, isAbsolute, resolve } from "node:path";
+import path from "node:path";
 import { parseConfigFile } from "verdaccio";
 
 import RegistryStopCommand from "./stop.js";
 import RegistryUpstreamCommand from "./upstream.js";
 
-export default class RegistryCleanCommand extends BaseCommand<
-  typeof RegistryCleanCommand
-> {
-  static override aliases = [
-    "registry:delete",
-    "registry:uninstall",
-    "registry:remove",
-  ];
+export default class RegistryCleanCommand extends BaseCommand<typeof RegistryCleanCommand> {
+  static override aliases = ["registry:delete", "registry:uninstall", "registry:remove"];
 
   static override description = `
 Will automatically stop the server before uninstalling.
@@ -52,19 +46,16 @@ Note: This will NOT uninstall pm2, as you may be using that for other things.`.t
     }),
     scope: Flags.string({
       dependsOn: ["storage"],
-      description:
-        "Specify a scope to remove, instead of removing all of them.",
+      description: "Specify a scope to remove, instead of removing all of them.",
       helpValue: "<string>",
     }),
     storage: Flags.boolean({
       allowNo: true,
-      description:
-        "Only remove published packages, instead of uninstalling verdaccio as a whole.",
+      description: "Only remove published packages, instead of uninstalling verdaccio as a whole.",
     }),
   };
 
-  static override summary =
-    "Remove the local verdaccio repo, or delete published packages.";
+  static override summary = "Remove the local verdaccio repo, or delete published packages.";
 
   public async run() {
     this.i("Cleaning up verdaccio");
@@ -111,8 +102,8 @@ Note: This will NOT uninstall pm2, as you may be using that for other things.`.t
   }
 
   private getStoragePath(configPath: string, storagePath: string) {
-    if (isAbsolute(storagePath)) return storagePath;
-    return resolve(dirname(configPath), storagePath);
+    if (path.isAbsolute(storagePath)) return storagePath;
+    return path.resolve(path.dirname(configPath), storagePath);
   }
 
   private async removePackages(scope?: string) {
@@ -128,7 +119,7 @@ Note: This will NOT uninstall pm2, as you may be using that for other things.`.t
         "Verdaccio config doesn't have a storage set. We can't determine where the packages are stored.",
         {
           suggestions: ["You may have to manually delete the packages."],
-        }
+        },
       );
     }
 
@@ -149,10 +140,7 @@ Note: This will NOT uninstall pm2, as you may be using that for other things.`.t
         }
 
         if (scope !== undefined && file.name !== scope) {
-          this.v(
-            "Skipping directory as it has a different scope: %s",
-            file.name
-          );
+          this.v("Skipping directory as it has a different scope: %s", file.name);
           return false;
         }
 
@@ -160,9 +148,9 @@ Note: This will NOT uninstall pm2, as you may be using that for other things.`.t
       })
       .map((file) => {
         this.v("Deleting packages for: %s", file.name);
-        const fullPath = resolve(storagePath, file.name);
+        const fullPath = path.resolve(storagePath, file.name);
         this.v(`Full path: %s`, fullPath);
-        return rm(resolve(storagePath, file.name), {
+        return rm(path.resolve(storagePath, file.name), {
           force: true,
           recursive: true,
         });

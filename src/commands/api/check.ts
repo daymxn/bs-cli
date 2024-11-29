@@ -19,18 +19,14 @@ import { BaseCommand } from "#src/commands/base-command.js";
 
 import ApiDiffCommand from "./diff.js";
 
-export default class ApiCheckCommand extends BaseCommand<
-  typeof ApiCheckCommand
-> {
+export default class ApiCheckCommand extends BaseCommand<typeof ApiCheckCommand> {
   static override aliases = ["api:validate"];
 
-  static override description =
-    "Shorthand for calling `api diff` with the exit flag.";
+  static override description = "Shorthand for calling `api diff` with the exit flag.";
 
   static override enableJsonFlag = true;
 
-  static override summary =
-    "Throws an error if there's any pending changes to the public API.";
+  static override summary = "Throws an error if there's any pending changes to the public API.";
 
   public async run() {
     this.i("Checking the public API for changes");

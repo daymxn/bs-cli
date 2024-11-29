@@ -17,10 +17,7 @@
 
 import { Node, visitEachChild } from "typescript";
 
-export function recursivelyVisit<T extends Node>(
-  node: T,
-  callback: (node: Node) => T | undefined
-): T {
+export function recursivelyVisit<T extends Node>(node: T, callback: (node: Node) => T | undefined): T {
   return visitEachChild(
     node,
     (child) => {
@@ -29,7 +26,7 @@ export function recursivelyVisit<T extends Node>(
         return recursivelyVisit(result, callback);
       }
     },
-    // eslint-disable-next-line unicorn/no-useless-undefined
-    undefined
+
+    undefined,
   );
 }

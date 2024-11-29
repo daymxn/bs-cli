@@ -20,8 +20,7 @@ import { BaseCommand } from "#src/commands/base-command.js";
 export default class ConfigCommands extends BaseCommand<typeof ConfigCommands> {
   static override enableJsonFlag = true;
 
-  static override summary =
-    "Commands for handling the config file for the CLI.";
+  static override summary = "Commands for handling the config file for the CLI.";
 
   public async run() {
     await this.showHelp();

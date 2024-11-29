@@ -21,12 +21,9 @@ import { Flags } from "@oclif/core";
 
 import ChangeStatusCommand from "./status.js";
 
-export default class ChangeExportCommand extends BaseCommand<
-  typeof ChangeExportCommand
-> {
+export default class ChangeExportCommand extends BaseCommand<typeof ChangeExportCommand> {
   static override aliases = ["change:save", "change:report"];
-  static override description =
-    "Shorthand for calling the status command with an output file.";
+  static override description = "Shorthand for calling the status command with an output file.";
 
   static override enableJsonFlag = true;
 

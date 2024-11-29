@@ -21,8 +21,7 @@ import DocsCommands from "../docs/index.js";
 import ApiUpdateCommand from "./update.js";
 
 export default class APICommands extends BaseCommand<typeof APICommands> {
-  static override description =
-    "Running this directly will update the public API file and the API docs in the wiki.";
+  static override description = "Running this directly will update the public API file and the API docs in the wiki.";
 
   static override enableJsonFlag = true;
 

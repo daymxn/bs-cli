@@ -23,9 +23,7 @@ import { ESLint, Linter } from "eslint";
 import { partition, sumBy } from "lodash-es";
 import { cwd } from "node:process";
 
-export default class LintCheckCommand extends BaseCommand<
-  typeof LintCheckCommand
-> {
+export default class LintCheckCommand extends BaseCommand<typeof LintCheckCommand> {
   static override aliases = ["lint:validate"];
 
   static override enableJsonFlag = true;
@@ -66,6 +64,8 @@ export default class LintCheckCommand extends BaseCommand<
     const eslint = new ESLint({
       cache,
       fix: this.flags.fix,
+      flags: ["unstable_ts_config"],
+      cwd: cwd(),
       overrideConfigFile: configPath ?? undefined,
     });
 
@@ -117,10 +117,7 @@ export default class LintCheckCommand extends BaseCommand<
     }
 
     const formatter = await eslint.loadFormatter();
-    const resultText = await formatter.format(results, {
-      cwd: cwd(),
-      rulesMeta: eslint.getRulesMetaForResults(results),
-    });
+    const resultText = await formatter.format(results, eslint.getRulesMetaForResults(results));
 
     this.w(resultText);
 

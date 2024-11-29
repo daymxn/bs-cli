@@ -20,8 +20,7 @@ import { BaseCommand } from "#src/commands/base-command.js";
 import ChangeCreateCommand from "./create.js";
 
 export default class ChangeCommands extends BaseCommand<typeof ChangeCommands> {
-  static override description =
-    "Running this directly will call the create command.";
+  static override description = "Running this directly will call the create command.";
 
   static override enableJsonFlag = false;
 

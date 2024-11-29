@@ -22,13 +22,10 @@ import { Flags } from "@oclif/core";
 import { mkdirp } from "fs-extra";
 import { cp } from "node:fs/promises";
 
-export default class TestUnpackCommand extends BaseCommand<
-  typeof TestUnpackCommand
-> {
+export default class TestUnpackCommand extends BaseCommand<typeof TestUnpackCommand> {
   static override aliases = ["test:download"];
 
-  static override description =
-    "Useful if you need to make changes to the test runner filers (eg; adding shims).";
+  static override description = "Useful if you need to make changes to the test runner filers (eg; adding shims).";
 
   static override enableJsonFlag = true;
 
@@ -42,8 +39,7 @@ export default class TestUnpackCommand extends BaseCommand<
     update: Flags.boolean({
       allowNo: true,
       default: true,
-      description:
-        "Update your config file to point to the unpacked test runner.",
+      description: "Update your config file to point to the unpacked test runner.",
     }),
   };
 

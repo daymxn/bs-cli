@@ -17,9 +17,7 @@
 
 import { BaseCommand } from "#src/commands/base-command.js";
 
-export default class RegistryCommands extends BaseCommand<
-  typeof RegistryCommands
-> {
+export default class RegistryCommands extends BaseCommand<typeof RegistryCommands> {
   static override description = `
 A local registry can be used inplace of npm for testing packages in a local environment before publishing them.
 
@@ -43,8 +41,7 @@ We use verdaccio as the local registry, and pm2 to host the registry in the back
     },
   ];
 
-  static override summary =
-    "Commands for hosting a local registry with verdaccio.";
+  static override summary = "Commands for hosting a local registry with verdaccio.";
 
   public async run() {
     await this.showHelp();

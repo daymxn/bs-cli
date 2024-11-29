@@ -21,13 +21,10 @@ import { pnpm } from "#src/util/apps.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
 import { Flags } from "@oclif/core";
 
-export default class ChangeVersionCommand extends BaseCommand<
-  typeof ChangeVersionCommand
-> {
+export default class ChangeVersionCommand extends BaseCommand<typeof ChangeVersionCommand> {
   static override aliases = ["change:bump", "change:collect"];
 
-  static override description =
-    "This should run before the actual publishing of any packages.";
+  static override description = "This should run before the actual publishing of any packages.";
 
   static override enableJsonFlag = true;
 
@@ -56,8 +53,7 @@ export default class ChangeVersionCommand extends BaseCommand<
     }),
   };
 
-  static override summary =
-    "Consume changelog files to determine (and update) the version of releasing packages.";
+  static override summary = "Consume changelog files to determine (and update) the version of releasing packages.";
 
   public async run() {
     this.i("Bumping versions for packages releasing");

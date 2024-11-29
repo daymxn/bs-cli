@@ -21,9 +21,7 @@ import { pnpm } from "#src/util/apps.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
 import { Flags } from "@oclif/core";
 
-export default class PublishLocalCommand extends BaseCommand<
-  typeof PublishLocalCommand
-> {
+export default class PublishLocalCommand extends BaseCommand<typeof PublishLocalCommand> {
   static override description = `The local copy is published under the assumption you're using verdaccio.
 If you need help setting up a server, you can use the \`bs registry\` subcommands.`;
 
@@ -31,8 +29,7 @@ If you need help setting up a server, you can use the \`bs registry\` subcommand
 
   static override flags = {
     "dry-run": Flags.boolean({
-      description:
-        "Perform a test publish without actually pushing the artifacts.",
+      description: "Perform a test publish without actually pushing the artifacts.",
     }),
     tag: Flags.string({
       char: "t",

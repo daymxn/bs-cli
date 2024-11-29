@@ -23,13 +23,10 @@ import { ApplicationError } from "#src/util/errors.js";
 import { writeFileSafe } from "#src/util/files.js";
 import { Flags } from "@oclif/core";
 import { mkdirp } from "fs-extra";
-import { dirname } from "node:path";
+import path from "node:path";
 
-export default class ConfigCreateCommand extends BaseCommand<
-  typeof ConfigCreateCommand
-> {
-  static override description =
-    "The config file provides configurable default values for various command.";
+export default class ConfigCreateCommand extends BaseCommand<typeof ConfigCreateCommand> {
+  static override description = "The config file provides configurable default values for various command.";
 
   static override enableJsonFlag = true;
 
@@ -61,9 +58,9 @@ export default class ConfigCreateCommand extends BaseCommand<
   public async run() {
     this.i("Creating a config file");
 
-    const { exit, force, path, preset } = this.flags;
+    const { exit, force, path: configPath, preset } = this.flags;
 
-    const directory = dirname(path!);
+    const directory = path.dirname(configPath!);
 
     this.v("Creating directory: %s", directory);
 
@@ -71,20 +68,17 @@ export default class ConfigCreateCommand extends BaseCommand<
 
     const config = preset ? UserConfig.__proxy_value : ConfigSchema.parse({});
 
-    const data = JSON.stringify(config, null, 2);
+    const data = JSON.stringify(config, undefined, 2);
 
-    const written = await writeFileSafe(path!, data, force);
+    const written = await writeFileSafe(configPath!, data, force);
 
     if (!written) {
       if (exit) {
-        throw new ApplicationError(
-          `Config file already exists at path: ${path}`,
-          {
-            suggestions: ["Run with the -f flag to overwrite the config file."],
-          }
-        );
+        throw new ApplicationError(`Config file already exists at path: ${configPath}`, {
+          suggestions: ["Run with the -f flag to overwrite the config file."],
+        });
       } else {
-        this.d("Config file already exists at path: %s", path);
+        this.d("Config file already exists at path: %s", configPath);
 
         return {
           message: "Config file already exists",
@@ -92,11 +86,11 @@ export default class ConfigCreateCommand extends BaseCommand<
       }
     }
 
-    this.d("Config file created: %s", path);
+    this.d("Config file created: %s", configPath);
 
     return {
       message: "Config file created",
-      path,
+      path: configPath,
     };
   }
 }

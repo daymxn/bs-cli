@@ -22,9 +22,7 @@ import { Flags } from "@oclif/core";
 
 import ConfigCreateCommand from "./create.js";
 
-export default class ConfigResetCommand extends BaseCommand<
-  typeof ConfigResetCommand
-> {
+export default class ConfigResetCommand extends BaseCommand<typeof ConfigResetCommand> {
   static override enableJsonFlag = true;
 
   static override flags = {

@@ -43,17 +43,9 @@ async function execute(command: string, args: string[], silence: boolean) {
 }
 
 export async function run(command: string, silence?: boolean): Promise<string>;
-export async function run(
-  command: string,
-  args: string[],
-  silence?: boolean
-): Promise<string>;
+export async function run(command: string, args: string[], silence?: boolean): Promise<string>;
 
-export async function run(
-  command: string,
-  arg2?: boolean | string[],
-  arg3?: boolean
-): Promise<string> {
+export async function run(command: string, arg2?: boolean | string[], arg3?: boolean): Promise<string> {
   let args: string[];
   let silence: boolean | undefined;
 
@@ -65,11 +57,7 @@ export async function run(
     silence = arg2;
   }
 
-  const { stderr, stdout, ...result } = await execute(
-    command,
-    args,
-    silence ?? UserConfig.global.silence
-  );
+  const { stderr, stdout, ...result } = await execute(command, args, silence ?? UserConfig.global.silence);
 
   if (result.exitCode && result.exitCode !== 0) {
     throw new ApplicationError(stderr || stdout, {
@@ -84,10 +72,7 @@ export async function run(
 export async function pnpm(args: string, silence?: boolean): Promise<string>;
 export async function pnpm(args: string[], silence?: boolean): Promise<string>;
 
-export async function pnpm(
-  arg1: string | string[],
-  silence?: boolean
-): Promise<string> {
+export async function pnpm(arg1: string | string[], silence?: boolean): Promise<string> {
   if (typeof arg1 === "string") {
     const args = arg1.trim().split(" ");
 
@@ -97,10 +82,7 @@ export async function pnpm(
   return run("pnpm", arg1, silence);
 }
 
-export async function pnpmJson<T>(
-  command: string,
-  silence: boolean = UserConfig.global.silence
-): Promise<T> {
+export async function pnpmJson<T>(command: string, silence: boolean = UserConfig.global.silence): Promise<T> {
   return pnpm(command, silence).then((it) => JSON.parse(it));
 }
 
@@ -135,19 +117,12 @@ function mapDependencyList(deps?: Record<string, ListedDependency>) {
 }
 
 function mapListResult(list: ListResult) {
-  return [
-    ...mapDependencyList(list.dependencies),
-    ...mapDependencyList(list.devDependencies),
-  ];
+  return [...mapDependencyList(list.dependencies), ...mapDependencyList(list.devDependencies)];
 }
 
 export async function fetchDependencies() {
-  const localDeps = await pnpmJson<ListResult[]>("list --json", true).then(
-    (list) => mapListResult(list[0])
-  );
-  const globalDeps = await pnpmJson<ListResult[]>("list --json -g", true).then(
-    (list) => mapListResult(list[0])
-  );
+  const localDeps = await pnpmJson<ListResult[]>("list --json", true).then((list) => mapListResult(list[0]));
+  const globalDeps = await pnpmJson<ListResult[]>("list --json -g", true).then((list) => mapListResult(list[0]));
 
   return [...localDeps, ...globalDeps] as Dependency[];
 }

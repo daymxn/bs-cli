@@ -21,11 +21,7 @@ import { readFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
-import {
-  ApplicationError,
-  extendError,
-  instanceOfNodeError,
-} from "../util/errors.js";
+import { ApplicationError, extendError, instanceOfNodeError } from "../util/errors.js";
 import { byProxy } from "../util/lazy.js";
 import { formatErrors } from "../util/zod.js";
 import { Config, ConfigSchema } from "./schema.js";
@@ -44,20 +40,14 @@ function decodeConfigFile(fileContents: string) {
   try {
     return JSON.parse(fileContents);
   } catch (e) {
-    throw extendError(
-      "Failed to decode config file to JSON. Is the syntax correct?",
-      e
-    );
+    throw extendError("Failed to decode config file to JSON. Is the syntax correct?", e);
   }
 }
 
 function validateConfig(json: object) {
   const result = ConfigSchema.safeParse(json);
   if (result.success) return result.data;
-  throw extendError(
-    `Config failed validation:\n${formatErrors(result.error)}`,
-    result.error
-  );
+  throw extendError(`Config failed validation:\n${formatErrors(result.error)}`, result.error);
 }
 
 export function loadConfig(path?: string) {
@@ -65,8 +55,7 @@ export function loadConfig(path?: string) {
   const fileContents = loadConfigFile(targetPath);
 
   if (!fileContents) {
-    if (path !== undefined)
-      throw new ApplicationError(`Invalid config file path specified: ${path}`);
+    if (path !== undefined) throw new ApplicationError(`Invalid config file path specified: ${path}`);
     return ConfigSchema.parse({});
   }
 
@@ -91,14 +80,11 @@ export function updateConfig(newConfig: RecursivePartial<Config>) {
 }
 
 export async function saveConfig(path: string = DEFAULT_CONFIG_LOCATION) {
-  return writeFile(path, JSON.stringify(UserConfig.__proxy_value, null, 2));
+  return writeFile(path, JSON.stringify(UserConfig.__proxy_value, undefined, 2));
 }
 
 export async function dumpSchema(path: string) {
-  return writeFile(
-    path,
-    JSON.stringify(zodToJsonSchema(ConfigSchema, "Config"), null, 2)
-  );
+  return writeFile(path, JSON.stringify(zodToJsonSchema(ConfigSchema, "Config"), undefined, 2));
 }
 
 export const UserConfig = byProxy(loadConfig);

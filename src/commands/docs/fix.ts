@@ -23,7 +23,7 @@ import { inlineCode } from "#src/util/markup.js";
 import { Flags } from "@oclif/core";
 import { Dirent, createReadStream } from "node:fs";
 import { mkdir, readdir, writeFile } from "node:fs/promises";
-import { parse, resolve } from "node:path";
+import path from "node:path";
 import { createInterface } from "node:readline/promises";
 
 export default class DocsFixCommand extends BaseCommand<typeof DocsFixCommand> {
@@ -80,9 +80,9 @@ export default class DocsFixCommand extends BaseCommand<typeof DocsFixCommand> {
   }
 
   private async processFile(targetFile: Dirent, outputDir: string) {
-    const fullPath = resolve(targetFile.parentPath, targetFile.name);
+    const fullPath = path.resolve(targetFile.parentPath, targetFile.name);
 
-    const { ext, name } = parse(fullPath);
+    const { ext, name } = path.parse(fullPath);
 
     if (ext !== ".md") {
       this.v("Skipping non markdown file: %s", fullPath);
@@ -110,17 +110,11 @@ export default class DocsFixCommand extends BaseCommand<typeof DocsFixCommand> {
 
     lines.close();
 
-    const header = [
-      "---",
-      `id: ${name}`,
-      `title: ${title}`,
-      `hide_title: true`,
-      "---",
-    ];
+    const header = ["---", `id: ${name}`, `title: ${title}`, `hide_title: true`, "---"];
 
     await mkdir(outputDir, { recursive: true });
 
-    const outputPath = resolve(outputDir, targetFile.name);
+    const outputPath = path.resolve(outputDir, targetFile.name);
 
     this.v("Saving file: %s", outputPath);
     await writeFile(outputPath, [...header, ...output].join("\n"));
@@ -143,7 +137,7 @@ function fixMarkdownHeaders(line: string): string {
 }
 
 function fixTables(line: string): string {
-  return line.startsWith("|") ? line.replaceAll("\\|", "&#124;") : line;
+  return line.startsWith("|") ? line.replaceAll(String.raw`\|`, "&#124;") : line;
 }
 
 function fixMarkdownLists(line: string): string {
@@ -158,9 +152,7 @@ function extractTitle(line: string): string | undefined {
 function processLine(line: string, name: string): string | undefined {
   if (line.startsWith("<!--")) return undefined;
 
-  const fixedLine = fixTables(
-    fixMarkdownLists(fixMarkdownHeaders(fixLinks(fixMarkdown(line))))
-  );
+  const fixedLine = fixTables(fixMarkdownLists(fixMarkdownHeaders(fixLinks(fixMarkdown(line)))));
 
   const homeLinkMatch = fixedLine.match(/\[Home]\(.\/index\.md\) &gt; (.*)/);
   if (homeLinkMatch && homeLinkMatch[0]) {

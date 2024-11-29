@@ -29,10 +29,7 @@ import {
   visitNodes,
 } from "typescript";
 
-function populateInterfaces(
-  root: Node,
-  interfaces: Record<string, TypeElement[]>
-) {
+function populateInterfaces(root: Node, interfaces: Record<string, TypeElement[]>) {
   return visitEachChild(
     root,
     (node) => {
@@ -48,18 +45,15 @@ function populateInterfaces(
         node.name,
         node.typeParameters,
         node.heritageClauses,
-        factory.createNodeArray([...node.members, ...membersMap])
+        factory.createNodeArray([...node.members, ...membersMap]),
       );
     },
 
-    undefined
+    undefined,
   );
 }
 
-function processModuleDeclarationBody(
-  body: ModuleBlock,
-  interfaces: Record<string, TypeElement[]>
-) {
+function processModuleDeclarationBody(body: ModuleBlock, interfaces: Record<string, TypeElement[]>) {
   return visitNodes(
     body.statements,
     (node) => {
@@ -77,14 +71,11 @@ function processModuleDeclarationBody(
 
       return node;
     },
-    isStatement
+    isStatement,
   );
 }
 
-function processModuleDeclaration(
-  node: Node,
-  interfaces: Record<string, TypeElement[]>
-) {
+function processModuleDeclaration(node: Node, interfaces: Record<string, TypeElement[]>) {
   if (!isModuleDeclaration(node)) return node;
   if (!node.body || !isModuleBlock(node.body)) return node;
 
@@ -95,15 +86,12 @@ function processModuleDeclaration(
   return node;
 }
 
-function collectAugmentedModules(
-  source: Node,
-  interfaces: Record<string, TypeElement[]>
-) {
+function collectAugmentedModules(source: Node, interfaces: Record<string, TypeElement[]>) {
   return visitEachChild(
     source,
     (node) => processModuleDeclaration(node, interfaces),
 
-    undefined
+    undefined,
   );
 }
 

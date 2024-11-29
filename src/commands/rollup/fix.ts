@@ -19,24 +19,12 @@ import { BaseCommand } from "#src/commands/base-command.js";
 import { UserConfig } from "#src/user-config/loaders.js";
 import { ApplicationError } from "#src/util/errors.js";
 import { readFileSafe } from "#src/util/files.js";
-import {
-  Transformer,
-  transformCombineAugmentations,
-  transformIdentifierNames,
-} from "#src/util/index.js";
+import { Transformer, transformCombineAugmentations, transformIdentifierNames } from "#src/util/index.js";
 import { Flags } from "@oclif/core";
 import { writeFile } from "node:fs/promises";
-import {
-  Node,
-  ScriptTarget,
-  createPrinter,
-  createSourceFile,
-  isJSDoc,
-} from "typescript";
+import { Node, ScriptTarget, createPrinter, createSourceFile, isJSDoc } from "typescript";
 
-export default class RollupFixCommand extends BaseCommand<
-  typeof RollupFixCommand
-> {
+export default class RollupFixCommand extends BaseCommand<typeof RollupFixCommand> {
   static override description =
     "Useful for fixing open bugs in tsup, or covering features not normally desired outside the rbxts ecosystem.";
 
@@ -60,8 +48,7 @@ export default class RollupFixCommand extends BaseCommand<
     packageDocs: Flags.boolean({
       allowNo: true,
       default: true,
-      description:
-        "Prepend the package documentation from the index file to the rollup file.",
+      description: "Prepend the package documentation from the index file to the rollup file.",
     }),
     source: Flags.string({
       description: "Path to the root index.ts file.",
@@ -84,56 +71,36 @@ export default class RollupFixCommand extends BaseCommand<
     const source = this.flags.source ?? UserConfig.api.source;
     const rollup = this.flags.input ?? UserConfig.api.rollup;
 
-    const identifierNames =
-      this.flags.identifierNames ??
-      UserConfig.api.transformers.fixIdentifierNames;
+    const identifierNames = this.flags.identifierNames ?? UserConfig.api.transformers.fixIdentifierNames;
 
     const moduleAugmentation =
-      this.flags.combineAugmentations ??
-      UserConfig.api.transformers.combineModuleAugmentations;
+      this.flags.combineAugmentations ?? UserConfig.api.transformers.combineModuleAugmentations;
 
-    const packageDocs =
-      this.flags.packageDocs ?? UserConfig.api.transformers.packageDocs;
+    const packageDocs = this.flags.packageDocs ?? UserConfig.api.transformers.packageDocs;
 
     this.v("Using source file: %s", source);
     this.v("Using rollup file: %s", rollup);
 
     const sourceContents = await readFileSafe(source);
     if (sourceContents === undefined) {
-      throw new ApplicationError(
-        `Source file doesn't exist at path: ${source}`,
-        {
-          suggestions: ["This should point to the root index.ts file."],
-        }
-      );
+      throw new ApplicationError(`Source file doesn't exist at path: ${source}`, {
+        suggestions: ["This should point to the root index.ts file."],
+      });
     }
 
     this.d("Loaded source file contents");
 
     const rollupContents = await readFileSafe(rollup);
     if (rollupContents === undefined) {
-      throw new ApplicationError(
-        `Rollup file doesn't exist at path: ${rollup}`,
-        {
-          suggestions: ["You might need to run `bs rollup generate` first."],
-        }
-      );
+      throw new ApplicationError(`Rollup file doesn't exist at path: ${rollup}`, {
+        suggestions: ["You might need to run `bs rollup generate` first."],
+      });
     }
 
     this.d("Loaded rollup file contents");
 
-    const sourceFile = createSourceFile(
-      source,
-      sourceContents,
-      ScriptTarget.Latest,
-      true
-    );
-    const rollupFile = createSourceFile(
-      rollup,
-      rollupContents,
-      ScriptTarget.Latest,
-      true
-    );
+    const sourceFile = createSourceFile(source, sourceContents, ScriptTarget.Latest, true);
+    const rollupFile = createSourceFile(rollup, rollupContents, ScriptTarget.Latest, true);
 
     const transformers: Transformer[] = [];
 
@@ -151,10 +118,7 @@ export default class RollupFixCommand extends BaseCommand<
       });
     }
 
-    const result = transformers.reduceRight(
-      (node, transform) => transform(node),
-      rollupFile
-    );
+    const result = transformers.reduceRight((node, transform) => transform(node), rollupFile);
 
     this.d("Creating output content");
     let outputContent = createPrinter().printFile(result);
@@ -164,16 +128,13 @@ export default class RollupFixCommand extends BaseCommand<
 
       const docs = getPackageDocs(sourceFile);
       if (docs === undefined) {
-        throw new ApplicationError(
-          `Missing package docs for source file: ${source}`,
-          {
-            suggestions: [
-              "Add a `@packageDocumentation` to the root index.ts file describing your library.",
-              "Disable package doc prepending in your config to avoid this behavior.",
-              "https://tsdoc.org/pages/tags/packagedocumentation/",
-            ],
-          }
-        );
+        throw new ApplicationError(`Missing package docs for source file: ${source}`, {
+          suggestions: [
+            "Add a `@packageDocumentation` to the root index.ts file describing your library.",
+            "Disable package doc prepending in your config to avoid this behavior.",
+            "https://tsdoc.org/pages/tags/packagedocumentation/",
+          ],
+        });
       }
 
       if (outputContent.includes(docs)) {
@@ -197,10 +158,7 @@ export default class RollupFixCommand extends BaseCommand<
 }
 
 function getPackageDocs(node: Node): string | undefined {
-  if (
-    isJSDoc(node) &&
-    node.tags?.some((tag) => tag.tagName.text === "packageDocumentation")
-  ) {
+  if (isJSDoc(node) && node.tags?.some((tag) => tag.tagName.text === "packageDocumentation")) {
     return node.getText();
   }
 

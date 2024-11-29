@@ -22,13 +22,11 @@ import { createPath, readFileSafe, unixPath } from "#src/util/files.js";
 import { parseVSCodeSettings, updateSettings } from "#src/vscode/loaders.js";
 import { Flags } from "@oclif/core";
 import { writeFile } from "node:fs/promises";
-import { parse, relative, resolve } from "node:path";
+import path from "node:path";
 
 const SCHEMA_FILE = "bs-config-schema.json";
 
-export default class ConfigSchemaCommand extends BaseCommand<
-  typeof ConfigSchemaCommand
-> {
+export default class ConfigSchemaCommand extends BaseCommand<typeof ConfigSchemaCommand> {
   static override description =
     "The json schema provides autocomplete and documentation in most IDEs while you're using the config file, which makes it easier to edit.";
 
@@ -59,7 +57,7 @@ export default class ConfigSchemaCommand extends BaseCommand<
     this.i("Saving json schema for config");
 
     const { output, settings, "update-vscode": updateVscode } = this.flags;
-    const fullPath = resolve(createPath(output!, SCHEMA_FILE));
+    const fullPath = path.resolve(createPath(output!, SCHEMA_FILE));
 
     this.v("Saving schema to file: %s", fullPath);
 
@@ -76,16 +74,12 @@ export default class ConfigSchemaCommand extends BaseCommand<
 
     const configFileName = this.findConfigFileName();
 
-    const originalSettings = await readFileSafe(settings!).then(
-      (it) => it ?? "{}"
-    );
+    const originalSettings = await readFileSafe(settings!).then((it) => it ?? "{}");
     const vscode = await parseVSCodeSettings(originalSettings);
 
-    const relativePath = unixPath(relative(".", fullPath));
+    const relativePath = unixPath(path.relative(".", fullPath));
 
-    const existingSchema = vscode["json.schemas"].find((it) =>
-      it.fileMatch.some((it) => it.includes(configFileName))
-    );
+    const existingSchema = vscode["json.schemas"].find((it) => it.fileMatch.some((it) => it.includes(configFileName)));
 
     if (existingSchema) {
       this.v("Found existing schema: %j", existingSchema);
@@ -113,11 +107,11 @@ export default class ConfigSchemaCommand extends BaseCommand<
   }
 
   private findConfigFileName() {
-    const path = this.flags.config;
-    if (!path) {
+    const configPath = this.flags.config;
+    if (!configPath) {
       return DEFAULT_CONFIG_LOCATION;
     }
 
-    return parse(path).base;
+    return path.parse(configPath).base;
   }
 }

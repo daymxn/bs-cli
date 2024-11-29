@@ -38,10 +38,7 @@ export async function parseVSCodeSettings(fileContents: string) {
   return VSCodeSettingsSchema.parse(parsedSettings);
 }
 
-export function updateSettings(
-  originalContent: string,
-  updatedSettings: VSCodeSettings
-) {
+export function updateSettings(originalContent: string, updatedSettings: VSCodeSettings) {
   const edits = modify(originalContent, [], updatedSettings, {
     formattingOptions: { insertSpaces: true, tabSize: 2 },
   });

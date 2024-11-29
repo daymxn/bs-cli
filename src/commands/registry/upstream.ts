@@ -21,13 +21,10 @@ import { pnpm } from "#src/util/apps.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
 import { Flags } from "@oclif/core";
 
-export default class RegistryUpstreamCommand extends BaseCommand<
-  typeof RegistryUpstreamCommand
-> {
+export default class RegistryUpstreamCommand extends BaseCommand<typeof RegistryUpstreamCommand> {
   static override aliases = ["registry:sync"];
 
-  static override description =
-    "You need to change the registry that pnpm points to if you want to use it with pnpm.";
+  static override description = "You need to change the registry that pnpm points to if you want to use it with pnpm.";
 
   static override enableJsonFlag = true;
 
@@ -109,9 +106,7 @@ export default class RegistryUpstreamCommand extends BaseCommand<
 
     if (scope) {
       this.d("Updating upstream registry for scope: %s", scope);
-      await pnpm(
-        `config set "${scope}:registry" http://${host}:${port}/ ${flags}`
-      );
+      await pnpm(`config set "${scope}:registry" http://${host}:${port}/ ${flags}`);
     } else {
       this.d("Updating default upstream registry");
       await pnpm(`config set registry http://${host}:${port}/ ${flags}`);

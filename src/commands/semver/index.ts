@@ -23,8 +23,7 @@ export default class SemverCommands extends BaseCommand<typeof SemverCommands> {
 
   static override enableJsonFlag = true;
 
-  static override summary =
-    "Commands for handling semver related issues in changesets.";
+  static override summary = "Commands for handling semver related issues in changesets.";
 
   public async run() {
     await this.showHelp();

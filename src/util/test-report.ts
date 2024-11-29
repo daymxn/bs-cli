@@ -55,21 +55,9 @@ export function createColors(theme: UserTheme) {
   const textColors = colors.text;
 
   const prefix = {
-    Failure: withColors(
-      "bold",
-      prefixColors.fail.background,
-      prefixColors.fail.color
-    )(" FAIL "),
-    Skipped: withColors(
-      "bold",
-      prefixColors.skip.background,
-      prefixColors.skip.color
-    )(" SKIP "),
-    Success: withColors(
-      "bold",
-      prefixColors.pass.background,
-      prefixColors.pass.color
-    )(" PASS "),
+    Failure: withColors("bold", prefixColors.fail.background, prefixColors.fail.color)(" FAIL "),
+    Skipped: withColors("bold", prefixColors.skip.background, prefixColors.skip.color)(" SKIP "),
+    Success: withColors("bold", prefixColors.pass.background, prefixColors.pass.color)(" PASS "),
   };
 
   const names = {
@@ -92,7 +80,7 @@ export abstract class Tree {
     public name: string,
     public colors: ColorPanel,
     public parent?: Tree,
-    public children: Map<string, Tree> = new Map()
+    public children: Map<string, Tree> = new Map(),
   ) {}
 
   public static fromTestResults(tests: TestResult[], colors: ColorPanel) {
@@ -126,9 +114,7 @@ export abstract class Tree {
       return category;
     }, this);
 
-    finalCategory.addChild(
-      new NodeTree(test, test.name, this.colors, test.result)
-    );
+    finalCategory.addChild(new NodeTree(test, test.name, this.colors, test.result));
   }
 
   public filterForStatus(status: TestStatus[]) {
@@ -173,15 +159,13 @@ export class CategoryTree extends Tree {
     name: string,
     public colors: ColorPanel,
     result: TestStatus = "Success",
-    parent?: Tree
+    parent?: Tree,
   ) {
     super(result, name, colors, parent);
   }
 
   updateResult() {
-    const results = new Set(
-      [...this.children.values()].map((child) => child.updateResult())
-    );
+    const results = new Set([...this.children.values()].map((child) => child.updateResult()));
     if (results.has("Failure")) return (this.result = "Failure");
     if (results.has("Skipped")) return (this.result = "Skipped");
     return (this.result = "Success");
@@ -194,7 +178,7 @@ export class NodeTree extends Tree {
     public name: string,
     colors: ColorPanel,
     result: TestStatus,
-    parent?: Tree
+    parent?: Tree,
   ) {
     super(result, name, colors, parent);
   }

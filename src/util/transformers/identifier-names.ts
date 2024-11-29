@@ -42,7 +42,7 @@ function renameDeclarations(node: Node, renamedMap: Map<string, string>): Node {
       node.modifiers,
       factory.createIdentifier(newName),
       node.typeParameters,
-      node.type
+      node.type,
     );
   }
 
@@ -53,17 +53,14 @@ function renameDeclarations(node: Node, renamedMap: Map<string, string>): Node {
       factory.createIdentifier(newName),
       node.typeParameters,
       node.heritageClauses,
-      node.members
+      node.members,
     );
   }
 
   return node;
 }
 
-function updateExports(
-  node: Node,
-  renamedMap: Map<string, string>
-): Node | undefined {
+function updateExports(node: Node, renamedMap: Map<string, string>): Node | undefined {
   if (!isExportDeclaration(node)) return node;
   if (!node.exportClause) return node;
   if (!isNamedExports(node.exportClause)) return node;
@@ -77,7 +74,7 @@ function updateExports(
         element,
         element.isTypeOnly,
         undefined,
-        factory.createIdentifier(renamedName)
+        factory.createIdentifier(renamedName),
       );
     }
 
@@ -88,22 +85,16 @@ function updateExports(
     node,
     node.modifiers,
     node.isTypeOnly,
-    node.exportClause
-      ? factory.updateNamedExports(node.exportClause, updatedElements)
-      : undefined,
+    node.exportClause ? factory.updateNamedExports(node.exportClause, updatedElements) : undefined,
     node.moduleSpecifier,
-    node.attributes
+    node.attributes,
   );
 }
 
 export function transformIdentifierNames(source: Node) {
   const renamedMap: Map<string, string> = new Map();
 
-  const root = recursivelyVisit(source, (node) =>
-    renameDeclarations(node, renamedMap)
-  );
+  const root = recursivelyVisit(source, (node) => renameDeclarations(node, renamedMap));
 
-  return recursivelyVisit(root, (node) =>
-    updateExports(node, renamedMap)
-  ) as SourceFile;
+  return recursivelyVisit(root, (node) => updateExports(node, renamedMap)) as SourceFile;
 }

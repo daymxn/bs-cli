@@ -31,9 +31,7 @@ export class AsyncCollector<T> {
     return arr;
   }
 
-  public filter(
-    condition: (item: T) => Promise<boolean> | boolean
-  ): AsyncCollector<T> {
+  public filter(condition: (item: T) => Promise<boolean> | boolean): AsyncCollector<T> {
     return new AsyncCollector(filterAsync(this.iterable, condition));
   }
 
@@ -50,7 +48,7 @@ export class AsyncCollector<T> {
       filterAsync(this.iterable, async (item) => {
         await callback(item);
         return true;
-      })
+      }),
     );
   }
 }
@@ -59,10 +57,7 @@ export function withAsyncIterable<T>(iterable: AsyncIterable<T>) {
   return new AsyncCollector(iterable);
 }
 
-async function* mapAsync<T, U>(
-  iterable: AsyncIterable<T>,
-  mapper: (item: T) => Promise<U> | U
-): AsyncIterable<U> {
+async function* mapAsync<T, U>(iterable: AsyncIterable<T>, mapper: (item: T) => Promise<U> | U): AsyncIterable<U> {
   for await (const item of iterable) {
     yield await mapper(item);
   }
@@ -70,7 +65,7 @@ async function* mapAsync<T, U>(
 
 async function* filterAsync<T>(
   iterable: AsyncIterable<T>,
-  predicate: (item: T) => Promise<boolean> | boolean
+  predicate: (item: T) => Promise<boolean> | boolean,
 ): AsyncIterable<T> {
   for await (const item of iterable) {
     if (await predicate(item)) {

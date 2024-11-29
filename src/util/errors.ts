@@ -38,7 +38,7 @@ export class ApplicationError extends Error {
 
   constructor(
     public message: string,
-    data: Partial<AppErrorData> = {}
+    data: Partial<AppErrorData> = {},
   ) {
     super(message, { cause: data.cause });
     this.data = {
@@ -91,10 +91,7 @@ export function extendIfNeeded(error: Error) {
   });
 }
 
-export async function wrapIfNeeded<T>(
-  message: string,
-  callback: () => Promise<T>
-) {
+export async function wrapIfNeeded<T>(message: string, callback: () => Promise<T>) {
   return callback().catch((e) => {
     if (e instanceof ApplicationError) {
       throw e;
@@ -104,11 +101,7 @@ export async function wrapIfNeeded<T>(
   });
 }
 
-export function extendError(
-  message: string,
-  error: unknown,
-  suggestions?: string[]
-) {
+export function extendError(message: string, error: unknown, suggestions?: string[]) {
   if (error instanceof Error) {
     if (error instanceof ApplicationError) {
       return new ApplicationError(message, error.data);
@@ -136,7 +129,7 @@ export function getFullStack(error: Error): string {
 
 export function instanceOfNodeError<T extends new (...args: any[]) => Error>(
   value: unknown,
-  errorType?: T
+  errorType?: T,
 ): value is InstanceType<T> & NodeJS.ErrnoException {
   if (errorType) {
     return value instanceof errorType;

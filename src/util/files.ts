@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import {
-  access,
-  copyFile,
-  readFile,
-  unlink,
-  writeFile,
-} from "node:fs/promises";
-import path, { isAbsolute, parse, relative, resolve } from "node:path";
+import { access, copyFile, readFile, unlink, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { cwd } from "node:process";
 import { fileURLToPath } from "node:url";
 import { file } from "tmp-promise";
@@ -36,10 +30,7 @@ interface Env {
 
 function isLocal() {
   const env = process.env as Env;
-  return (
-    env.npm_package_name === "bs-cli" &&
-    env.npm_package_homepage === "https://github.com/daymxn/bs-cli"
-  );
+  return env.npm_package_name === "bs-cli" && env.npm_package_homepage === "https://github.com/daymxn/bs-cli";
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,8 +39,7 @@ const distFolder = path.resolve(__dirname, "..");
 const localPath = "node_modules/bs-cli/dist";
 const fallbackResourcePath = isLocal() ? distFolder : localPath;
 
-const resoucePath = (process.env.BS_RESOURCE_PATH ??
-  fallbackResourcePath) as string;
+const resoucePath = (process.env.BS_RESOURCE_PATH ?? fallbackResourcePath) as string;
 
 export function resourceFile(subpath: string) {
   return `${resoucePath}/assets/${subpath}`.replaceAll("\\", "/");
@@ -108,23 +98,19 @@ export async function restoreFile(backup: string, original: string) {
  */
 export async function tempFile() {
   const currentDir = cwd();
-  const drive = parse(currentDir).root;
+  const drive = path.parse(currentDir).root;
 
   const { path: jsonFilePath } = await file({
     prefix: "bs-cli",
     tmpdir: drive,
   });
 
-  const relativePath = relative(currentDir, jsonFilePath);
+  const relativePath = path.relative(currentDir, jsonFilePath);
 
   return relativePath;
 }
 
-export async function writeFileSafe(
-  path: string,
-  content: string,
-  overwrite: boolean = false
-): Promise<boolean> {
+export async function writeFileSafe(path: string, content: string, overwrite: boolean = false): Promise<boolean> {
   return writeFile(path, content, {
     encoding: "utf8",
     flag: overwrite ? "w" : "wx",
@@ -142,9 +128,9 @@ export function unixPath(str: string) {
 }
 
 export function createPath(basePath: string, ...segments: string[]) {
-  if (isAbsolute(basePath)) {
-    return unixPath(resolve(basePath, ...segments));
+  if (path.isAbsolute(basePath)) {
+    return unixPath(path.resolve(basePath, ...segments));
   }
 
-  return unixPath(relative("", resolve(basePath, ...segments)));
+  return unixPath(path.relative("", path.resolve(basePath, ...segments)));
 }

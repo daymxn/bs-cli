@@ -32,7 +32,7 @@ const prefix = (color: string, bg: string) =>
     z.object({
       background: z.ostring().default(bg),
       color: z.ostring().default(color),
-    })
+    }),
   );
 
 const TestsSchema = z.object({
@@ -41,14 +41,14 @@ const TestsSchema = z.object({
       fail: prefix("white", "bgRed"),
       pass: prefix("#000000", "bgGreen"),
       skip: prefix("white", "bgYellow"),
-    })
+    }),
   ),
   text: withDefaults(
     z.object({
       fail: z.ostring().default("red"),
       pass: z.ostring().default("green"),
       skip: z.ostring().default("blue"),
-    })
+    }),
   ),
 });
 

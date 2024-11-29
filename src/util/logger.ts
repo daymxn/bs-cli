@@ -18,18 +18,12 @@
 import { clamp } from "lodash-es";
 import { z } from "zod";
 
-export const LogLevel = z.enum([
-  "trace",
-  "debug",
-  "info",
-  "warning",
-  "error",
-] as const);
+export const LogLevel = z.enum(["trace", "debug", "info", "warning", "error"] as const);
 
 export type LogLevel = z.infer<typeof LogLevel>;
 
 export const LogLevelMapping: Record<LogLevel, number> = Object.fromEntries(
-  LogLevel.options.map((level, index) => [level, index])
+  LogLevel.options.map((level, index) => [level, index]),
 ) as Record<LogLevel, number>;
 
 export function logLevelIsGreater(source: LogLevel, target: LogLevel) {

@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import {
-  UserConfig,
-  loadConfig,
-  saveConfig,
-  updateConfig,
-} from "#src/user-config/loaders.js";
+import { UserConfig, loadConfig, saveConfig, updateConfig } from "#src/user-config/loaders.js";
 import { UserTheme, UserThemeSchema } from "#src/user-theme/schema.js";
 import {
   ApplicationError,
@@ -48,9 +43,7 @@ setGracefulCleanup();
  *
  * @typeParam T - The command class.
  */
-export type Flags<T extends typeof Command> = Interfaces.InferredFlags<
-  (typeof BaseCommand)["baseFlags"] & T["flags"]
->;
+export type Flags<T extends typeof Command> = Interfaces.InferredFlags<(typeof BaseCommand)["baseFlags"] & T["flags"]>;
 
 /**
  * Type representing the arguments for a command.
@@ -380,8 +373,7 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
    */
   override jsonEnabled(): boolean {
     if (!this.ctor.enableJsonFlag) return false;
-    if (this.config.scopedEnvVar?.("CONTENT_TYPE")?.toLowerCase() === "json")
-      return true;
+    if (this.config.scopedEnvVar?.("CONTENT_TYPE")?.toLowerCase() === "json") return true;
 
     return UserConfig.global.json ?? super.jsonEnabled();
   }
@@ -508,9 +500,7 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
 
     if (deps.length === 0)
       throw new ApplicationError(`Missing required package: ${target}`, {
-        suggestions: [
-          `Run ${inlineCode(`pnpm add ${target}`)} to install the package`,
-        ],
+        suggestions: [`Run ${inlineCode(`pnpm add ${target}`)} to install the package`],
       });
   }
 

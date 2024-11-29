@@ -23,7 +23,7 @@ import { backupFile, existsAsync, restoreFile } from "#src/util/files.js";
 import { codeBlock, inlineCode } from "#src/util/markup.js";
 import { Command, Flags } from "@oclif/core";
 import { readdir, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import path from "node:path";
 
 import RollupCommands from "../rollup/index.js";
 import ApiExportCommand from "./export.js";
@@ -33,8 +33,7 @@ type Flags<T extends typeof Command> = T["flags"];
 export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
   static override aliases = ["api:changes"];
 
-  static override description =
-    "Generates the current public API and compares it to the saved `.api.md` file.";
+  static override description = "Generates the current public API and compares it to the saved `.api.md` file.";
 
   static override enableJsonFlag = true;
 
@@ -59,8 +58,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
       description: "Print the diff to the console.",
     }),
     report: Flags.boolean({
-      description:
-        "Generate an API report, suitable for a GitHub comment, instead of a basic diff.",
+      description: "Generate an API report, suitable for a GitHub comment, instead of a basic diff.",
     }),
   };
 
@@ -72,9 +70,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
     await this.buildProd();
     await RollupCommands.run([], this.config);
 
-    const input = await this.getInput(
-      this.flags.input ?? UserConfig.api.apiFile
-    );
+    const input = await this.getInput(this.flags.input ?? UserConfig.api.apiFile);
     this.d("Using API file: %s", input);
 
     this.v("Creating backup file");
@@ -89,7 +85,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
       await ApiExportCommand.run([], this.config);
 
       const diff = await this.generateDiff(backup, input).then((diff) =>
-        this.flags.report ? this.generateReport(diff) : diff
+        this.flags.report ? this.generateReport(diff) : diff,
       );
 
       if (diff === "") {
@@ -111,9 +107,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
       if (this.flags.exit) {
         throw new ApplicationError("There are pending API changes.", {
-          suggestions: [
-            `If these changes are expected, run ${inlineCode("bs api:update")} to update the API.`,
-          ],
+          suggestions: [`If these changes are expected, run ${inlineCode("bs api:update")} to update the API.`],
         });
       }
 
@@ -135,8 +129,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
     return run(`git diff --no-index ${oldFile} ${newFile}`).catch((e) => {
       // remove everything before the diff message (like ts exception message)
-      if (e?.exitCode === 1)
-        return (e.message as string).replace(/([^]*?)^(?=diff)/m, "");
+      if (e?.exitCode === 1) return (e.message as string).replace(/([^]*?)^(?=diff)/m, "");
 
       throw extendError("Failed to run `git diff` to compare the APIs", e);
     });
@@ -164,9 +157,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
     if (maybeInput) {
       if (!(await existsAsync(maybeInput)))
-        throw new ApplicationError(
-          `API file does not exist at the provided path: ${maybeInput}`
-        );
+        throw new ApplicationError(`API file does not exist at the provided path: ${maybeInput}`);
 
       this.v("Using provided API file: %s", maybeInput);
       return maybeInput;
@@ -179,10 +170,10 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
     for (const file of files) {
       if (file.name.endsWith(".api.md")) {
-        const path = resolve(file.parentPath, file.name);
-        this.v("Found api file: %s", path);
+        const apiPath = path.resolve(file.parentPath, file.name);
+        this.v("Found api file: %s", apiPath);
 
-        return path;
+        return apiPath;
       }
 
       this.v("File does not end with `.api.md`: %s", file.name);

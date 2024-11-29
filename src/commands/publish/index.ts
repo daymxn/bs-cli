@@ -23,19 +23,15 @@ import { Flags } from "@oclif/core";
 import ChangePublishCommand from "../change/publish.js";
 import PublishLocalCommand from "./local.js";
 
-export default class PublishCommands extends BaseCommand<
-  typeof PublishCommands
-> {
-  static override description =
-    "Running this directly will publish the library.";
+export default class PublishCommands extends BaseCommand<typeof PublishCommands> {
+  static override description = "Running this directly will publish the library.";
 
   static override enableJsonFlag = true;
 
   static override flags = {
     "dry-run": Flags.boolean({
       dependsOn: ["local"],
-      description:
-        "Perform a test publish without actually pushing the artifacts.",
+      description: "Perform a test publish without actually pushing the artifacts.",
     }),
     local: Flags.boolean({
       allowNo: true,
@@ -58,8 +54,7 @@ export default class PublishCommands extends BaseCommand<
     }),
   };
 
-  static override summary =
-    "Commands for handling the publishing of the library.";
+  static override summary = "Commands for handling the publishing of the library.";
 
   public async run() {
     this.i("Publishing library");
