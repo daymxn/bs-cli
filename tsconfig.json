@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": true,
+    "declaration": false,
     "module": "Node16",
     "outDir": "dist",
     "rootDir": "src",

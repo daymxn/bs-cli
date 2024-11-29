@@ -89,7 +89,8 @@
     "/dist",
     "/oclif.manifest.json",
     "/static/theme.json",
-    "/static/assets"
+    "/static/assets",
+    "tsconfig.json"
   ],
   "publishConfig": {
     "access": "public"
@@ -122,6 +123,7 @@
   },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b && pnpm assets",
+    "build:ci": "shx rm -rf dist && tsc -b --noCheck && pnpm assets",
     "assets": "cp -rf ./static/assets ./dist/assets",
     "dev": "pnpm exec ./bin/dev.cmd",
     "prod": "pnpm exec ./bin/run.cmd",

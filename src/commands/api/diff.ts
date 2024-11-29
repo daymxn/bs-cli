@@ -27,7 +27,6 @@ import path from "node:path";
 
 import RollupCommands from "../rollup/index.js";
 import ApiExportCommand from "./export.js";
-import ApiUpdateCommand from "./update.js";
 
 type Flags<T extends typeof Command> = T["flags"];
 
@@ -146,7 +145,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
     return `Your change includes changes that impact the public API.
   
-  Please run ${this.nameOf(ApiUpdateCommand)} to update the public API file.
+  Please run ${inlineCode("bs api:update")} to update the public API file.
   
   **API Diff**
   ${codeBlock(diff, "diff")}
@@ -182,7 +181,7 @@ export default class ApiDiffCommand extends BaseCommand<typeof ApiDiffCommand> {
 
     throw new ApplicationError("Could not find an API file to diff against.", {
       suggestions: [
-        `Run ${this.nameOf(ApiExportCommand)} to create one.`,
+        `Run ${inlineCode("bs api:export")} to create one.`,
         "You can manually provide a path to an api file with the --input flag.",
       ],
     });

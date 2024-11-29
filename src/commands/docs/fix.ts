@@ -19,13 +19,12 @@ import { BaseCommand } from "#src/commands/base-command.js";
 import { UserConfig } from "#src/user-config/loaders.js";
 import { withAsyncIterable } from "#src/util/async-collecter.js";
 import { extendError, instanceOfNodeError } from "#src/util/errors.js";
+import { inlineCode } from "#src/util/markup.js";
 import { Flags } from "@oclif/core";
 import { Dirent, createReadStream } from "node:fs";
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createInterface } from "node:readline/promises";
-
-import DocsGenerateCommand from "./generate.js";
 
 export default class DocsFixCommand extends BaseCommand<typeof DocsFixCommand> {
   static override description =
@@ -65,7 +64,7 @@ export default class DocsFixCommand extends BaseCommand<typeof DocsFixCommand> {
     const files = await readdir(input, { withFileTypes: true }).catch((e) => {
       if (instanceOfNodeError(e) && e.code === "ENOENT") {
         throw extendError(`Input directory doesn't exist: ${input}`, e, [
-          `Make sure to run ${this.nameOf(DocsGenerateCommand)} first.`,
+          `Make sure to run ${inlineCode("bs docs:generate")} first.`,
         ]);
       }
 
