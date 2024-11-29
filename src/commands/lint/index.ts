@@ -19,7 +19,9 @@ import { BaseCommand } from "#src/commands/base-command.js";
 
 import LintFixCommand from "./fix.js";
 
-// TODO(): dont downgrade log level for commands that just defer to a single command with no logging of their own
+// TODO(): add proper logging support for nested commands.
+// currently, we downgrade them. But if I run `bs lint`, I expect to see the info logs from `fix -> check`.
+// but ONLY if I ran `bs lint`. If I ran `bs someOtherCommand` that ran `bs lint`, then I shouldn't see those as info; they should be downgraded.
 export default class LintCommands extends BaseCommand<typeof LintCommands> {
   static override description = "Running this directly will call the fix command.";
 

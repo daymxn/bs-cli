@@ -25,6 +25,13 @@ export default class LintFixCommand extends BaseCommand<typeof LintFixCommand> {
   static override summary = "Run eslint and fix any fixable issues.";
 
   public async run() {
-    return LintCheckCommand.run(["--fix"], this.config);
+    // TODO(): decide if this is a valid solution for the issue in lint/index.ts
+    // the downside is we double log during debugging, or if your log level is below info.
+    this.i("Fixing any eslint issues");
+
+    const result = await LintCheckCommand.run(["--fix"], this.config);
+    this.i(result.message);
+
+    return result;
   }
 }
