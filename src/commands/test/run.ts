@@ -110,7 +110,7 @@ export default class TestRunCommand extends BaseCommand<typeof TestRunCommand> {
       await TestBuildCommand.run([], this.config);
     }
 
-    await run(`lune run ${dir} ${rbxl} -- ${flags}`, true);
+    await run("lune", ["run", dir, rbxl, "--", ...flags.unpack()]);
 
     if (report && jsonPath) {
       this.d("Exporting a copy of the test report as JSON: %s", jsonPath);

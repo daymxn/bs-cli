@@ -30,13 +30,13 @@ interface Env {
 
 function isLocal() {
   const env = process.env as Env;
-  return env.npm_package_name === "bs-cli" && env.npm_package_homepage === "https://github.com/daymxn/bs-cli";
+  return env.npm_package_name === "@daymxn/bs" && env.npm_package_homepage === "https://github.com/daymxn/bs-cli";
 }
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distFolder = path.resolve(__dirname, "..");
-const localPath = "node_modules/bs-cli/dist";
+const localPath = "node_modules/@daymxn/bs/dist";
 const fallbackResourcePath = isLocal() ? distFolder : localPath;
 
 const resoucePath = (process.env.BS_RESOURCE_PATH ?? fallbackResourcePath) as string;
