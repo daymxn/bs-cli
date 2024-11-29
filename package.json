@@ -130,7 +130,7 @@
     "assets": "cp -rf ./static/assets ./dist/assets",
     "dev": "pnpm exec ./bin/dev.cmd",
     "prod": "pnpm exec ./bin/run.cmd",
-    "reprod": "pnpm exec ./bin/run.cmd",
+    "reprod": "node ./bin/run.js",
     "prereprod": "pnpm build",
     "format": "eslint . --flag unstable_ts_config --fix",
     "manifest": "oclif manifest",
