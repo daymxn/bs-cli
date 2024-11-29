@@ -407,16 +407,6 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
   }
 
   /**
-   * Gets the name of the command with bin prefix.
-   *
-   * @param command - The command class.
-   * @returns The formatted command name.
-   */
-  public nameOf<T extends typeof Command>(command: T) {
-    return inlineCode(`${this.config.bin} ${command.id}`);
-  }
-
-  /**
    * Saves the current user configuration.
    *
    * @returns void
