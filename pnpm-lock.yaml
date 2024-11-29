@@ -66,6 +66,9 @@ importers:
         specifier: ^3.23.5
         version: 3.23.5(zod@3.23.8)
     devDependencies:
+      '@changesets/changelog-git':
+        specifier: ^0.2.0
+        version: 0.2.0
       '@changesets/cli':
         specifier: ^2.27.10
         version: 2.27.10
