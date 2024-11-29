@@ -136,7 +136,7 @@
     "manifest": "oclif manifest",
     "readme": "pnpm reprod readme",
     "update": "pnpm readme && pnpm manifest",
-    "postbuild": "chmod u+x /bin/**/*",
+    "postbuild": "chmod u+x ./bin/**/*",
     "preupdate": "shx rm -f oclif.manifest.json",
     "release": "pnpm changeset publish",
     "prerelease": "pnpm run update",
