@@ -134,7 +134,8 @@
     "readme": "pnpm reprod readme",
     "update": "pnpm readme && pnpm manifest",
     "preupdate": "shx rm -f oclif.manifest.json",
-    "prepublish": "pnpm run update",
+    "release": "pnpm changeset publish",
+    "prerelease": "pnpm run update",
     "change": "pnpm changeset add",
     "change:version": "pnpm changeset version",
     "push:tags": "pnpm changeset tag && git push --follow-tags"
