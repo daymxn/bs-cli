@@ -128,6 +128,12 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
       helpGroup: "GLOBAL",
       summary: "Force toggle TTY exclusive behaviors.",
     }),
+    ci: Flags.boolean({
+      allowNo: true,
+      helpGroup: "GLOBAL",
+      env: "CI",
+      summary: "Enable more verbose debug facilities, appropriate for CI usage.",
+    }),
   };
 
   /**
@@ -349,11 +355,14 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
       global: {
         build: this.flags.build,
         dev: this.flags.dev,
+        docs: this.flags.docs,
         json: this.flags.json,
         rollup: this.flags.rollup,
+        logLevel: this.flags.loglevel,
         silence: this.flags.silence,
         trace: this.flags.stacktrace,
         tty: this.flags.tty,
+        ...this.flagsForCI(),
       },
     });
 
@@ -364,6 +373,32 @@ export abstract class BaseCommand<T extends typeof Command> extends Command {
         },
       });
     }
+
+    if (this.flags.noBuildOrRollup) {
+      updateConfig({
+        global: {
+          build: false,
+          rollup: false,
+        },
+      });
+    }
+  }
+
+  /**
+   * Flags for usage when the CI flag is enabled.
+   *
+   * @remarks
+   * Is empty if CI wasn't passed.
+   *
+   * @returns The flags for CI usage.
+   */
+  protected flagsForCI(): { trace: boolean; logLevel: LogLevel } | object {
+    if (!this.flags.ci) return {};
+
+    return {
+      trace: true,
+      logLevel: "trace",
+    };
   }
 
   /**
