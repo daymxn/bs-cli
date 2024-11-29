@@ -127,7 +127,6 @@
   },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b && pnpm assets",
-    "build:ci": "shx rm -rf dist && tsc -b --noCheck && pnpm assets",
     "assets": "cp -rf ./static/assets ./dist/assets",
     "dev": "pnpm exec ./bin/dev.cmd",
     "prod": "pnpm exec ./bin/run.cmd",
@@ -137,6 +136,7 @@
     "manifest": "oclif manifest",
     "readme": "pnpm reprod readme",
     "update": "pnpm readme && pnpm manifest",
+    "postbuild": "chmod u+x /bin/**/*",
     "preupdate": "shx rm -f oclif.manifest.json",
     "release": "pnpm changeset publish",
     "prerelease": "pnpm run update",
