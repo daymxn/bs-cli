@@ -19,6 +19,8 @@ import { BaseCommand } from "#src/commands/base-command.js";
 import { UserConfig } from "#src/user-config/loaders.js";
 import { pnpm } from "#src/util/apps.js";
 import { Flags } from "@oclif/core";
+import { mkdirp } from "fs-extra";
+import path from "node:path";
 
 export default class TestBuildCommand extends BaseCommand<typeof TestBuildCommand> {
   static override aliases = ["test:export"];
@@ -52,6 +54,10 @@ export default class TestBuildCommand extends BaseCommand<typeof TestBuildComman
     this.v("Using rojo project: %s", project);
     this.v("Building rbxl file to output: %s", output);
 
+    this.v("Ensuring directory exists");
+    await mkdirp(path.dirname(output));
+
+    this.v("Running rojo");
     await pnpm(`rojo build ${project} -o ${output}`);
 
     return {
