@@ -105,7 +105,7 @@ export default class ChangePublishCommand extends BaseCommand<typeof ChangePubli
 
     if (pushTags) {
       this.d("Pushing git tags");
-      await run("git push --follow-tags");
+      await run("git", ["push", "--follow-tags"]);
     }
   }
 }

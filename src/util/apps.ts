@@ -35,10 +35,6 @@ async function execute(command: string, args: string[], silence: boolean) {
   const isSilent = silence || UserConfig.global.json;
   const config = isSilent ? defaultConfig : pipeConfig;
 
-  if (args.length === 0) {
-    return execa(config)`${command}`;
-  }
-
   return execa(command, args, config);
 }
 
@@ -76,7 +72,7 @@ export async function pnpm(arg1: string | string[], silence?: boolean): Promise<
   if (typeof arg1 === "string") {
     const args = arg1.trim().split(" ");
 
-    return run(`pnpm`, args, silence);
+    return run("pnpm", args, silence);
   }
 
   return run("pnpm", arg1, silence);
