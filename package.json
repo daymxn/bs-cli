@@ -137,7 +137,7 @@
     "prepublish": "pnpm run update",
     "change": "pnpm changeset add",
     "change:version": "pnpm changeset version",
-    "push:tags": "git push --follow-tags"
+    "push:tags": "pnpm changeset tag && git push --follow-tags"
   },
   "imports": {
     "#src/*": "./dist/*"
