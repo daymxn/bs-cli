@@ -30,6 +30,7 @@
 - [`bs lint:fix`](#bs-lintfix)
 - [`bs publish`](#bs-publish)
 - [`bs publish:local`](#bs-publishlocal)
+- [`bs publish:tags`](#bs-publishtags)
 - [`bs registry`](#bs-registry)
 - [`bs registry:clean`](#bs-registryclean)
 - [`bs registry:setup`](#bs-registrysetup)
@@ -605,6 +606,20 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/publish/local.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/publish/local.ts)_
+
+## [`bs publish:tags`](#bs-publishtags)
+
+Manually generate and push git tags for the current release.
+
+```text
+USAGE
+  $ bs publish:tags [--push]
+
+FLAGS
+  --[no-]push  Push the tags to github.
+```
+
+_See code: [src/commands/publish/tags.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/publish/tags.ts)_
 
 ## [`bs registry`](#bs-registry)
 

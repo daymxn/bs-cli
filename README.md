@@ -65,6 +65,8 @@ For a full list of commands, check out the [commands](commands.md) page.
 
 ## Roadmap
 
+- Check command
+- Fix command
 - Theme command
 - Wiki commands
 - Semver commands
