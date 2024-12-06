@@ -1,26 +1,26 @@
 {
-    "bin": "white",
-    "command": "blue",
-    "commandSummary": "bold",
-    "dollarSign": "yellow",
-    "flag": "green",
-    "flagDefaultValue": "blue",
-    "flagOptions": "blue",
-    "flagRequired": "red",
-    "flagSeparator": "dim",
-    "json": {
-      "brace": "magenta",
-      "bracket": "magenta",
-      "colon": "dim",
-      "comma": "dim",
-      "key": "#9CDCFE",
-      "string": "#CE9178",
-      "number": "#B5CEA8",
-      "boolean": "blue",
-      "null": "blue"
-    },
-    "sectionDescription": "#adadad",
-    "sectionHeader": "italic",
-    "topic": "#feffc4",
-    "version": "#ffa500"
-  }
+  "bin": "white",
+  "command": "blue",
+  "commandSummary": "bold",
+  "dollarSign": "yellow",
+  "flag": "green",
+  "flagDefaultValue": "blue",
+  "flagOptions": "blue",
+  "flagRequired": "red",
+  "flagSeparator": "dim",
+  "json": {
+    "brace": "magenta",
+    "bracket": "magenta",
+    "colon": "dim",
+    "comma": "dim",
+    "key": "#9CDCFE",
+    "string": "#CE9178",
+    "number": "#B5CEA8",
+    "boolean": "blue",
+    "null": "blue"
+  },
+  "sectionDescription": "#adadad",
+  "sectionHeader": "italic",
+  "topic": "#feffc4",
+  "version": "#ffa500"
+}

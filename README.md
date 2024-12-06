@@ -52,7 +52,7 @@ pnpm bs config init
 I've been working on a lot of rbxts projects lately, and I found myself
 copy and pasting a lot of the same files (eg; testing).
 
-Furthermore, the "scripts" section of `package.json` was getting *execcively*
+Furthermore, the "scripts" section of `package.json` was getting _excessively_
 long, and it was hard to see the commands at a glance.
 
 By abstracting all my scripts into a single CLI, I'm now able to not only

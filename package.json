@@ -51,6 +51,7 @@
     "eslint-plugin-unicorn": "^56.0.1",
     "jiti": "^2.4.0",
     "oclif": "^4.15.29",
+    "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "shx": "^0.3.4",
     "ts-node": "^10.9.2",
@@ -63,7 +64,6 @@
     "@microsoft/api-documenter": "^7",
     "@microsoft/api-extractor": "^7",
     "eslint": ">=8.0.0",
-    "ts-node": "^10",
     "tsup": "^8"
   },
   "peerDependenciesMeta": {
@@ -133,7 +133,8 @@
     "prod": "pnpm exec ./bin/run.cmd",
     "reprod": "node ./bin/run.js",
     "prereprod": "pnpm build",
-    "format": "eslint . --flag unstable_ts_config --fix",
+    "lint": "pnpm eslint . --flag unstable_ts_config --fix",
+    "format": "pnpm prettier . --write",
     "manifest": "oclif manifest",
     "readme": "pnpm reprod readme",
     "update": "pnpm readme && pnpm manifest",

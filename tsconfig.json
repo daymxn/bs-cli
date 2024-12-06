@@ -8,8 +8,8 @@
     "target": "es2022",
     "moduleResolution": "node16",
     "baseUrl": ".",
-		"paths": {
-			"#src/*": ["src/*"],
+    "paths": {
+      "#src/*": ["src/*"]
     },
     "skipLibCheck": true
   },
@@ -17,7 +17,5 @@
   "ts-node": {
     "esm": true
   },
-  "exclude": [
-    "node_modules",
-  ]
+  "exclude": ["node_modules"]
 }

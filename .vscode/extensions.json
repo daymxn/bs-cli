@@ -1,6 +1,8 @@
 {
-	"recommendations": [
-		"dbaeumer.vscode-eslint",
-		"AntiAntiSepticeye.vscode-color-picker"
-	]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "EditorConfig.EditorConfig",
+    "AntiAntiSepticeye.vscode-color-picker"
+  ]
 }

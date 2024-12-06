@@ -18,7 +18,7 @@
 import { UserConfig } from "#src/user-config/loaders.js";
 import { execa } from "execa";
 
-import { ApplicationError } from "./errors.js";
+import { ApplicationError, toError } from "./errors.js";
 
 const defaultConfig = {
   windowsVerbatimArguments: true,
@@ -35,7 +35,10 @@ async function execute(command: string, args: string[], silence: boolean) {
   const isSilent = silence || UserConfig.global.json;
   const config = isSilent ? defaultConfig : pipeConfig;
 
-  return execa(command, args, config);
+  return execa(command, args, {
+    ...config,
+    reject: false,
+  });
 }
 
 export async function run(command: string, silence?: boolean): Promise<string>;
@@ -55,9 +58,9 @@ export async function run(command: string, arg2?: boolean | string[], arg3?: boo
 
   const { stderr, stdout, ...result } = await execute(command, args, silence ?? UserConfig.global.silence);
 
-  if (result.exitCode && result.exitCode !== 0) {
+  if (result.failed) {
     throw new ApplicationError(stderr || stdout, {
-      cause: result.cause,
+      cause: toError(result.cause),
       exitCode: result.exitCode,
     });
   }

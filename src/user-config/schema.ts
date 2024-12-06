@@ -57,6 +57,17 @@ const lintSchema = z
   })
   .describe("Configuration for lint related commands.");
 
+const formatSchema = z
+  .object({
+    cache: z.oboolean().default(false).describe("Only check changed files."),
+    config: defaultNull(z.string()).describe("Path to the prettier config file."),
+    patterns: z
+      .optional(z.array(z.string()))
+      .default(["."])
+      .describe("Pattern to use in finding files to run against."),
+  })
+  .describe("Configuration for format related commands.");
+
 const registrySchema = z
   .object({
     global: z.oboolean().default(true).describe("Install and manage packages verdaccio/pm2 in the global space."),
@@ -133,6 +144,7 @@ export const ConfigSchema = z
     docs: withDefaults(docsSchema),
     global: withDefaults(globalSchema),
     lint: withDefaults(lintSchema),
+    format: withDefaults(formatSchema),
     registry: withDefaults(registrySchema),
     release: withDefaults(releaseSchema),
     tests: withDefaults(testsSchema),

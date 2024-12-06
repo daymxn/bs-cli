@@ -138,6 +138,13 @@ export function instanceOfNodeError<T extends new (...args: any[]) => Error>(
   return value instanceof Error;
 }
 
+export function toError(maybeError: unknown) {
+  if (maybeError instanceof Error) {
+    return maybeError;
+  }
+  return new Error(String(maybeError));
+}
+
 // export function exitWithError(error: unknown): never {
 //   logError(error);
 //   if (error instanceof SubprocessError) process.exit(error.exitCode);

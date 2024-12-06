@@ -22,6 +22,9 @@
 - [`bs docs`](#bs-docs)
 - [`bs docs:fix`](#bs-docsfix)
 - [`bs docs:generate`](#bs-docsgenerate)
+- [`bs format`](#bs-format)
+- [`bs format:check`](#bs-formatcheck)
+- [`bs format:fix`](#bs-formatfix)
 - [`bs lint`](#bs-lint)
 - [`bs lint:check`](#bs-lintcheck)
 - [`bs lint:fix`](#bs-lintfix)
@@ -56,20 +59,20 @@
 ## [Global Flags](#global-flags)
 
 ```text
-  -B, --[no-]build         Toggle build related tasks.
-  -C, --config=<path>      Path to the bs config file.
-      --[no-]ci            Enable more verbose debug facilities, appropriate for CI usage.
-      --dev                Use the dev build of your library.
-      --[no-]docs          Toggle jsdoc/wiki related tasks.
-      --json               Format output as json.
-      --loglevel=<option>  Set the minimum log level to log.
-                           <options: trace|debug|info|warning|error>
-      --noBuildOrRollup    Disable build and rollup related tasks
-      --prod               Use the prod build of your library.
-      --[no-]rollup        Toggle rollup related tasks.
-      --[no-]silence       Disable logging from external tooling.
-      --[no-]stacktrace    Toggle stack trace logging for errors.
-      --[no-]tty           Force toggle TTY exclusive behaviors.
+  --[no-]build         Toggle build related tasks.
+  --[no-]ci            Enable more verbose debug facilities, appropriate for CI usage.
+  --config=<path>      Path to the bs config file.
+  --dev                Use the dev build of your library.
+  --[no-]docs          Toggle jsdoc/wiki related tasks.
+  --json               Format output as json.
+  --loglevel=<option>  Set the minimum log level to log.
+                       <options: trace|debug|info|warning|error>
+  --noBuildOrRollup    Disable build and rollup related tasks
+  --prod               Use the prod build of your library.
+  --[no-]rollup        Toggle rollup related tasks.
+  --[no-]silence       Disable logging from external tooling.
+  --[no-]stacktrace    Toggle stack trace logging for errors.
+  --[no-]tty           Force toggle TTY exclusive behaviors.
 ```
 
 ## [`bs api`](#bs-api)
@@ -472,6 +475,51 @@ ALIASES
 ```
 
 _See code: [src/commands/docs/generate.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/docs/generate.ts)_
+
+## [`bs format`](#bs-format)
+
+Commands for handling formatting.
+
+```text
+USAGE
+  $ bs format
+
+DESCRIPTION
+  Running this directly will call the fix command.
+```
+
+_See code: [src/commands/format/index.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/format/index.ts)_
+
+## [`bs format:check`](#bs-formatcheck)
+
+Run eslint and output any issues.
+
+```text
+USAGE
+  $ bs format:check [--cache] [--prettier <path>] [-p
+    <string>...]
+
+FLAGS
+  -p, --pattern=<string>...  Pattern to use in finding files to run against.
+      --[no-]cache           Only check changed files.
+      --prettier=<path>      Path to the prettier config file.
+
+ALIASES
+  $ bs format:validate
+```
+
+_See code: [src/commands/format/check.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/format/check.ts)_
+
+## [`bs format:fix`](#bs-formatfix)
+
+Run prettier and fix any fixable issues.
+
+```text
+USAGE
+  $ bs format:fix
+```
+
+_See code: [src/commands/format/fix.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/format/fix.ts)_
 
 ## [`bs lint`](#bs-lint)
 

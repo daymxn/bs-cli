@@ -129,10 +129,14 @@ via the [GitHub web panel](https://github.com/daymxn/bs-cli/compare).
 
 Code in this repo is formatted according to eslint and prettier.
 You can use the attached `.vscode` folder for automatically formatting on file save,
-or you can manually run both via the command line with the `format` script.
+or you can manually run either via the command line with the `format` and `lint` scripts.
 
 ```sh
 pnpm format
+```
+
+```sh
+pnpm lint
 ```
 
 ### Updating commands

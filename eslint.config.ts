@@ -17,7 +17,6 @@
 
 import eslint from "@eslint/js";
 import headers from "eslint-plugin-headers";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import tseslint from "typescript-eslint";
 
@@ -25,7 +24,6 @@ export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended,
   eslintPluginUnicorn.configs["flat/recommended"],
-  eslintPluginPrettierRecommended,
   {
     plugins: {
       headers,
@@ -47,21 +45,6 @@ export default tseslint.config(
       "max-params": "off",
       "new-cap": "off",
       "no-return-assign": "off",
-      "prettier/prettier": [
-        "warn",
-        {
-          arrowParens: "always",
-          bracketSpacing: true,
-          endOfLine: "lf",
-          plugins: ["prettier-plugin-organize-imports"],
-          printWidth: 120,
-          semi: true,
-          singleQuote: false,
-          tabWidth: 2,
-          trailingComma: "all",
-          useTabs: false,
-        },
-      ],
     },
   },
   {
