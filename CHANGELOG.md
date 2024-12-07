@@ -1,5 +1,17 @@
 # @daymxn/bs
 
+## 0.2.0
+
+### Minor Changes
+
+- 8b7b869: Added the format command group, which runs prettier to format issues.
+- 22d9334: Added the `publish:tag` command for generating and pushing git tags after a release.
+
+### Patch Changes
+
+- 0a2c876: Fix issue with docs being disabled and still running.
+- 3c5e915: Fix bug with update command + luarc path
+
 ## 0.1.0
 
 ### Minor Changes
