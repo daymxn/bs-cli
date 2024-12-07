@@ -49,7 +49,7 @@ export default class DocsFixCommand extends BaseCommand<typeof DocsFixCommand> {
     "Perform various fixes on the generated markdown files so that they can be used with docusaurus.";
 
   public async run() {
-    if (!UserConfig.docs) {
+    if (!UserConfig.global.docs) {
       this.d("Skipping doc fixing since docs are disabled.");
       return { message: "Docs are disabled." };
     }

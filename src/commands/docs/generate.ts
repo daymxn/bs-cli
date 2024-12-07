@@ -44,7 +44,7 @@ export default class DocsGenerateCommand extends BaseCommand<typeof DocsGenerate
   static override summary = "Export the public API as markdown files for use in the wiki.";
 
   public async run() {
-    if (!UserConfig.docs) {
+    if (!UserConfig.global.docs) {
       this.d("Skipping public API doc generation since docs are disabled.");
       return { message: "Docs are disabled." };
     }

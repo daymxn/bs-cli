@@ -45,7 +45,7 @@ export default class DocsCommands extends BaseCommand<typeof DocsCommands> {
   static override summary = "Commands for handling the wiki files.";
 
   public async run() {
-    if (!UserConfig.docs) {
+    if (!UserConfig.global.docs) {
       this.d("Skipping wiki doc generation since docs are disabled.");
       return { message: "Docs are disabled." };
     }
