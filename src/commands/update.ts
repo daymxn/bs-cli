@@ -25,7 +25,7 @@ export default class UpdateCommand extends BaseCommand<typeof UpdateCommand> {
   public static description = `
 Since bs isn't published to any registry, you can use this command to automatically update your github repo dependency.
 
-If this command isn't working for some reason, you can manually run ${inlineCode("pnpm add daymxn/bs-cli")}, and pnpm will pull the latest version.
+If this command isn't working for some reason, you can manually run ${inlineCode("pnpm add @daymxn/bs")}, and pnpm will pull the latest version.
 `.trim();
 
   static override flags = {
@@ -44,7 +44,7 @@ If this command isn't working for some reason, you can manually run ${inlineCode
 
     this.d("Pulling from branch: %s", branch);
 
-    await pnpm(`pnpm add daymxn/bs-cli#${branch}`);
+    await pnpm(`pnpm add @daymxn/bs#${branch}`);
 
     this.d("CLI updated");
 
