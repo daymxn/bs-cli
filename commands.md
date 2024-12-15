@@ -48,6 +48,7 @@
 - [`bs test:unpack`](#bs-testunpack)
 - [`bs update`](#bs-update)
 - [`bs wiki`](#bs-wiki)
+- [`bs help [COMMAND]`](#bs-help-command)
 - [`bs plugins`](#bs-plugins)
 - [`bs plugins:inspect PLUGIN...`](#bs-pluginsinspect-plugin)
 - [`bs plugins:install PLUGIN`](#bs-pluginsinstall-plugin)
@@ -55,7 +56,6 @@
 - [`bs plugins:reset`](#bs-pluginsreset)
 - [`bs plugins:uninstall [PLUGIN]`](#bs-pluginsuninstall-plugin)
 - [`bs plugins:update`](#bs-pluginsupdate)
-- [`bs help [COMMAND]`](#bs-help-command)
 
 ## [Global Flags](#global-flags)
 
@@ -956,17 +956,14 @@ Update your CLI to the latest version.
 
 ```text
 USAGE
-  $ bs update [--branch <value>]
-
-FLAGS
-  --branch=<value>  [default: main] Github branch to pull the update from
+  $ bs update
 
 DESCRIPTION
   Since bs isn't published to any registry, you can use this command to automatically update your github repo
   dependency.
 
-  If this command isn't working for some reason, you can manually run `pnpm add @daymxn/bs`, and pnpm will pull the
-  latest version.
+  If this command isn't working for some reason, you can manually run `pnpm update @daymxn/bs@latest`, and pnpm will
+  pull the latest version.
 ```
 
 _See code: [src/commands/update.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/update.ts)_
@@ -984,6 +981,23 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/wiki/index.ts](https://github.com/daymxn/bs-cli/blob/main/src/commands/wiki/index.ts)_
+
+## [`bs help [COMMAND]`](#bs-help-command)
+
+Display help for bs.
+
+```text
+USAGE
+  $ bs help [COMMAND...] [-n]
+
+ARGUMENTS
+  COMMAND...  Command to show help for.
+
+FLAGS
+  -n, --nested-commands  Include all nested commands in the output.
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/main/src/commands/help.ts)_
 
 ## [`bs plugins`](#bs-plugins)
 
@@ -1150,20 +1164,3 @@ FLAGS
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/main/src/commands/plugins/update.ts)_
-
-## [`bs help [COMMAND]`](#bs-help-command)
-
-Display help for bs.
-
-```text
-USAGE
-  $ bs help [COMMAND...] [-n]
-
-ARGUMENTS
-  COMMAND...  Command to show help for.
-
-FLAGS
-  -n, --nested-commands  Include all nested commands in the output.
-```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/main/src/commands/help.ts)_

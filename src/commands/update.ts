@@ -17,7 +17,6 @@
 
 import { pnpm } from "#src/util/apps.js";
 import { inlineCode } from "#src/util/markup.js";
-import { Flags } from "@oclif/core";
 
 import { BaseCommand } from "./base-command.js";
 
@@ -25,26 +24,15 @@ export default class UpdateCommand extends BaseCommand<typeof UpdateCommand> {
   public static description = `
 Since bs isn't published to any registry, you can use this command to automatically update your github repo dependency.
 
-If this command isn't working for some reason, you can manually run ${inlineCode("pnpm add @daymxn/bs")}, and pnpm will pull the latest version.
+If this command isn't working for some reason, you can manually run ${inlineCode("pnpm update @daymxn/bs@latest")}, and pnpm will pull the latest version.
 `.trim();
-
-  static override flags = {
-    branch: Flags.string({
-      default: "main",
-      description: "Github branch to pull the update from",
-    }),
-  };
 
   public static summary = "Update your CLI to the latest version.";
 
   public async run() {
     this.i("Updating CLI");
 
-    const { branch } = this.flags;
-
-    this.d("Pulling from branch: %s", branch);
-
-    await pnpm(`pnpm add @daymxn/bs#${branch}`);
+    await pnpm(`pnpm update @daymxn/bs@latest`);
 
     this.d("CLI updated");
 
