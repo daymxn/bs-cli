@@ -1,5 +1,15 @@
 # @daymxn/bs
 
+## 0.3.0
+
+### Minor Changes
+
+- 33e337e: Fix update command using branch and not keeping latest tag.
+
+### Patch Changes
+
+- 430fbba: Fix issue with format:check failing when there are no fixes.
+
 ## 0.2.0
 
 ### Minor Changes
