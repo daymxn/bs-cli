@@ -20,6 +20,7 @@ import { UserConfig } from "#src/user-config/loaders.js";
 import { pnpm } from "#src/util/apps.js";
 import { ApplicationError } from "#src/util/errors.js";
 import { FlagBuilder } from "#src/util/flag-builder.js";
+import { isBlank } from "#src/util/strings.js";
 import { Flags } from "@oclif/core";
 
 export default class PrettierCheckCommand extends BaseCommand<typeof PrettierCheckCommand> {
@@ -90,7 +91,7 @@ export default class PrettierCheckCommand extends BaseCommand<typeof PrettierChe
       throw e;
     });
 
-    const files = result.split("\n");
+    const files = result.split("\n").filter((it) => !isBlank(it));
 
     if (files.length === 0) {
       this.i("All files are properly formatted");

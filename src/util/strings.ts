@@ -25,3 +25,7 @@ export function makeUrl(str: string) {
 
   return `http://${newStr}`;
 }
+
+export function isBlank(str: string) {
+  return str.trim() === "";
+}
